@@ -91,7 +91,7 @@ public class CtdtKeHoachMoNhomDTO {
 		this.heSoHp = heSoHp;
 	}
 	public String getTongSoNhom() {
-		return tongSoNhom; 
+		return tongSoNhom;
 	}
 	public void setTongSoNhom(String tongSoNhom) {
 		this.tongSoNhom = tongSoNhom;
