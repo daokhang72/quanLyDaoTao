@@ -30,6 +30,78 @@ public class CtdtKeHoachMoNhomDTO {
 		this.tongSoNhom = tongSoNhom;
 		this.slsvNhom = slsvNhom;
 	}
+	public int getMonNhomId() {
+		return monNhomId;
+	}
+	public void setMonNhomId(int monNhomId) {
+		this.monNhomId = monNhomId;
+	}
+	public int getMaHp() {
+		return maHp;
+	}
+	public void setMaHp(int maHp) {
+		this.maHp = maHp;
+	}
+	public String getTenHocPhan() {
+		return tenHocPhan;
+	}
+	public void setTenHocPhan(String tenHocPhan) {
+		this.tenHocPhan = tenHocPhan;
+	}
+	public int getSoTinChi() {
+		return soTinChi;
+	}
+	public void setSoTinChi(int soTinChi) {
+		this.soTinChi = soTinChi;
+	}
+	public String getKhoa() {
+		return khoa;
+	}
+	public void setKhoa(String khoa) {
+		this.khoa = khoa;
+	}
+	public int getSoTietLyThuyet() {
+		return soTietLyThuyet;
+	}
+	public void setSoTietLyThuyet(int soTietLyThuyet) {
+		this.soTietLyThuyet = soTietLyThuyet;
+	}
+	public int getSoTietBaiTap() {
+		return soTietBaiTap;
+	}
+	public void setSoTietBaiTap(int soTietBaiTap) {
+		this.soTietBaiTap = soTietBaiTap;
+	}
+	public int getSoTietThucHanh() {
+		return soTietThucHanh;
+	}
+	public void setSoTietThucHanh(int soTietThucHanh) {
+		this.soTietThucHanh = soTietThucHanh;
+	}
+	public int getSoTietTc() {
+		return soTietTc;
+	}
+	public void setSoTietTc(int soTietTc) {
+		this.soTietTc = soTietTc;
+	}
+	public float getHeSoHp() {
+		return heSoHp;
+	}
+	public void setHeSoHp(float heSoHp) {
+		this.heSoHp = heSoHp;
+	}
+	public String getTongSoNhom() {
+		return tongSoNhom;
+	}
+	public void setTongSoNhom(String tongSoNhom) {
+		this.tongSoNhom = tongSoNhom;
+	}
+	public int getSlsvNhom() {
+		return slsvNhom;
+	}
+	public void setSlsvNhom(int slsvNhom) {
+		this.slsvNhom = slsvNhom;
+	}
     
     
 }		
