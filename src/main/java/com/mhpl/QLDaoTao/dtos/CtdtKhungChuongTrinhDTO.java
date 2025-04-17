@@ -1,7 +1,16 @@
 package com.mhpl.QLDaoTao.dtos;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
 public class CtdtKhungChuongTrinhDTO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private int khungId;
+	
 	 private int ctdtId;
 	 private String khoiKienThuc;
 	 private String tenNhom;
