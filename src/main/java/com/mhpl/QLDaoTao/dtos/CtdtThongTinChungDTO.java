@@ -1,4 +1,4 @@
-package DTO;
+package com.mhpl.QLDaoTao.dtos;
 
 public class CtdtThongTinChungDTO {
 	private int ctdtId;
