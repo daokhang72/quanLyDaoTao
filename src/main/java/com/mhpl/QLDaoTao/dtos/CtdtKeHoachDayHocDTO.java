@@ -1,4 +1,4 @@
-package DTO;
+package com.mhpl.QLDaoTao.dtos;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
