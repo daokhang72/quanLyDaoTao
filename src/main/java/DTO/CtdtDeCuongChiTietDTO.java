@@ -1,7 +1,16 @@
 package DTO;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
+@Entity
 public class CtdtDeCuongChiTietDTO {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int deCuongId;
+	
     private int maHp;
     private String tenBoPhan;
     private String diemDanhGia;
