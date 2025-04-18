@@ -1,4 +1,4 @@
-package com.mhpl.QLDaoTao.models;
+package com.mhpl.QLDaoTao.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -14,20 +14,25 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GiangVien {
+public class HocPhan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int giangVienId;
+	private int maHp;
 	
-    private int userId;
+    private int khungId;
 
-    private String hoTen;
+    private String tenHocPhan;
 
-    private String loaiGiangVien;
+    private int soTinChi;
 
-    private String donVi;
+    private int soTietLyThuyet;
 
-    private String email;
+    private int soTietThucHanh;
 
-    private String soDienThoai;
+    private int soTietThucTap;
+
+    private int tongSoTiet;
+
+    private int heSoHocPhan;
+
 }
