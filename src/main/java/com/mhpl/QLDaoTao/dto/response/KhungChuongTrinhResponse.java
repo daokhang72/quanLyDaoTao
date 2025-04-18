@@ -1,4 +1,4 @@
-package com.mhpl.QLDaoTao.response;
+package com.mhpl.QLDaoTao.dto.response;
 
 import com.mhpl.QLDaoTao.model.KhungChuongTrinh;
 

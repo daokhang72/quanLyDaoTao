@@ -40,4 +40,4 @@ public class KeHoachMoNhom {
     private String tongSoNhom;
 
     private int slsvNhom;
-}		
+}

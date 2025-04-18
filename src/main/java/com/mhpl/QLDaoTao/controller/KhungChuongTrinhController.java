@@ -1,9 +1,7 @@
 package com.mhpl.QLDaoTao.controller;
 
-import com.mhpl.QLDaoTao.dto.repository.KhungChuongTrinhRepository;
 import com.mhpl.QLDaoTao.dto.request.KhungChuongTrinhRequest;
-import com.mhpl.QLDaoTao.model.KhungChuongTrinh;
-import com.mhpl.QLDaoTao.response.KhungChuongTrinhResponse;
+import com.mhpl.QLDaoTao.dto.response.KhungChuongTrinhResponse;
 import com.mhpl.QLDaoTao.service.KhungChuongTrinhServicce;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

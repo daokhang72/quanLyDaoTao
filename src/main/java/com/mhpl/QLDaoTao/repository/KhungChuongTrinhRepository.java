@@ -1,4 +1,4 @@
-package com.mhpl.QLDaoTao.dto.repository;
+package com.mhpl.QLDaoTao.repository;
 
 import com.mhpl.QLDaoTao.model.KhungChuongTrinh;
 import org.springframework.data.jpa.repository.JpaRepository;
