@@ -17,8 +17,6 @@ public record HocPhanResponse(
 
         int soTietThucTap,
 
-        int tongSoTiet,
-
         int heSoHocPhan
 ) {
     public static HocPhanResponse of(HocPhan hocPhan) {
@@ -30,7 +28,6 @@ public record HocPhanResponse(
                 hocPhan.getSoTietLyThuyet(),
                 hocPhan.getSoTietThucHanh(),
                 hocPhan.getSoTietThucTap(),
-                hocPhan.getTongSoTiet(),
                 hocPhan.getHeSoHocPhan()
         );
 

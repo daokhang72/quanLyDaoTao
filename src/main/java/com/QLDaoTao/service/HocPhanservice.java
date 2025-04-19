@@ -2,6 +2,8 @@ package com.QLDaoTao.service;
 
 import com.QLDaoTao.dto.request.HocPhanRequest;
 import com.QLDaoTao.dto.response.HocPhanResponse;
+import com.QLDaoTao.exception.CustomException;
+import com.QLDaoTao.exception.ErrorCode;
 import com.QLDaoTao.model.HocPhan;
 import com.QLDaoTao.repository.HocPhanRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -27,7 +29,6 @@ public class HocPhanservice {
                 request.soTietLyThuyet(),
                 request.soTietThucHanh(),
                 request.soTietThucTap(),
-                request.tongSoTiet(),
                 request.heSoHocPhan()
         ));
         return HocPhanResponse.of(result);
@@ -43,7 +44,7 @@ public class HocPhanservice {
 
     public HocPhanResponse suaHocPhan(Integer id, HocPhanRequest request) {
         HocPhan entity = hocPhanRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy KhungChuongTrinh với ID: " + id));
+                .orElseThrow(() -> new CustomException(ErrorCode.HocPhan_NOT_FOUND));
 
         entity.setKhungId(request.khungId());
         entity.setTenHocPhan(request.tenHocPhan());
@@ -51,7 +52,6 @@ public class HocPhanservice {
         entity.setSoTietLyThuyet(request.soTietLyThuyet());
         entity.setSoTietThucHanh(request.soTietThucHanh());
         entity.setSoTietThucTap(request.soTietThucTap());
-        entity.setTongSoTiet(request.tongSoTiet());
         entity.setHeSoHocPhan(request.heSoHocPhan());
         return HocPhanResponse.of(entity);
     }
@@ -59,7 +59,7 @@ public class HocPhanservice {
 
     public void xoaHocPhan(Integer id) {
         if (!hocPhanRepository.existsById(id)) {
-            throw new EntityNotFoundException("Không tìm thấy KhungChuongTrinh với ID: " + id);
+            throw new CustomException(ErrorCode.HocPhan_NOT_FOUND);
         }
         hocPhanRepository.deleteById(id);
     }
