@@ -13,8 +13,6 @@ public record HocPhanRequest(
 
         int soTietThucTap,
 
-        int tongSoTiet,
-
         int heSoHocPhan
 ) {
 }

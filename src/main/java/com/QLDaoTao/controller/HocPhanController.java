@@ -25,12 +25,12 @@ public class HocPhanController {
         return ResponseEntity.ok(hocPhanservice.layToanBoHocPhan());
     }
 
-    @PutMapping("/{khungId")
+    @PutMapping("/{hocPhanId}")
     public ResponseEntity<HocPhanResponse> suaHocPhan(Integer id, HocPhanRequest request){
         return ResponseEntity.ok(hocPhanservice.suaHocPhan(id, request));
     }
 
-    @DeleteMapping("/{khungId")
+    @DeleteMapping("/{hocPhanId}")
     public void xoaHocPhan(Integer id){
         hocPhanservice.xoaHocPhan(id);
     }

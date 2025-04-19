@@ -26,12 +26,12 @@ public class KhungChuongTrinhController {
         return ResponseEntity.ok(khungChuongTrinhServicce.layToanBoKhungChuongTrinh());
     }
 
-    @PutMapping("/{khungId")
+    @PutMapping("/{khungId}")
     public ResponseEntity<KhungChuongTrinhResponse> suaKhungChuongTrinh(Integer id, KhungChuongTrinhRequest request){
         return ResponseEntity.ok(khungChuongTrinhServicce.suaKhungChuongTrinh(id, request));
     }
 
-    @DeleteMapping("/{khungId")
+    @DeleteMapping("/{khungId}")
     public void xoaKhungChuongTrinh(Integer id){
         khungChuongTrinhServicce.xoaKhungChuongTrinh(id);
     }

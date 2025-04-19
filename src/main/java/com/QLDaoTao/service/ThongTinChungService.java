@@ -16,7 +16,7 @@ public class ThongTinChungService {
 
     private final ThongTinChungRepository repository;
 
-    public ThongTinChungResponse tao(ThongTinChungRequest request) {
+    public ThongTinChungResponse taoThongTinChung(ThongTinChungRequest request) {
         ThongTinChung ttc = new ThongTinChung();
         ttc.setTenCtdt(request.tenCtdt());
         ttc.setBac(request.bac());
@@ -31,11 +31,11 @@ public class ThongTinChungService {
         return ThongTinChungResponse.of(repository.save(ttc));
     }
 
-    public List<ThongTinChungResponse> layTatCa() {
+    public List<ThongTinChungResponse> layTatCaThongTinChung() {
         return repository.findAll().stream().map(ThongTinChungResponse::of).collect(Collectors.toList());
     }
 
-    public ThongTinChungResponse capNhat(int id, ThongTinChungRequest request) {
+    public ThongTinChungResponse capNhatThongTinChung(int id, ThongTinChungRequest request) {
         ThongTinChung ttc = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy Thông tin chung với id = " + id));
         ttc.setTenCtdt(request.tenCtdt());
@@ -51,7 +51,7 @@ public class ThongTinChungService {
         return ThongTinChungResponse.of(repository.save(ttc));
     }
 
-    public void xoa(int id) {
+    public void xoaThongTinChung(int id) {
         repository.deleteById(id);
     }
 }
