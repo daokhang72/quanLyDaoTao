@@ -14,8 +14,10 @@ public enum ErrorCode {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED, "Phương thức HTTP không được hỗ trợ."),
 
     //Hoc Phan
-    HocPhan_NOT_FOUND(HttpStatus.NOT_FOUND, "Không tìm thấy Học Phần");
+    HocPhan_NOT_FOUND(HttpStatus.NOT_FOUND, "Không tìm thấy Học Phần"),
 
+    //Thong Tin Chung
+    ThongTinChung_NOT_FOUND(HttpStatus.NOT_FOUND, "Không tìm thấy Thông tin chung");
     private final HttpStatus status;
     private final String message;
 }

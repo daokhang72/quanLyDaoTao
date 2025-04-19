@@ -2,6 +2,8 @@ package com.QLDaoTao.service;
 
 import com.QLDaoTao.dto.request.ThongTinChungRequest;
 import com.QLDaoTao.dto.response.ThongTinChungResponse;
+import com.QLDaoTao.exception.CustomException;
+import com.QLDaoTao.exception.ErrorCode;
 import com.QLDaoTao.model.ThongTinChung;
 import com.QLDaoTao.repository.ThongTinChungRepository;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +39,7 @@ public class ThongTinChungService {
 
     public ThongTinChungResponse capNhatThongTinChung(int id, ThongTinChungRequest request) {
         ThongTinChung ttc = repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Không tìm thấy Thông tin chung với id = " + id));
+                .orElseThrow(() -> new CustomException(ErrorCode.ThongTinChung_NOT_FOUND));
         ttc.setTenCtdt(request.tenCtdt());
         ttc.setBac(request.bac());
         ttc.setLoaiBang(request.loaiBang());

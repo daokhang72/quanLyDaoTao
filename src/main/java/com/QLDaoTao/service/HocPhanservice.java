@@ -1,5 +1,6 @@
 package com.QLDaoTao.service;
 
+import com.QLDaoTao.dto.request.HocPhanFilterRequest;
 import com.QLDaoTao.dto.request.HocPhanRequest;
 import com.QLDaoTao.dto.response.HocPhanResponse;
 import com.QLDaoTao.exception.CustomException;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -63,4 +65,18 @@ public class HocPhanservice {
         }
         hocPhanRepository.deleteById(id);
     }
+
+    public List<HocPhanResponse> timKiemHocPhan(HocPhanFilterRequest filter) {
+        List<HocPhan> results = hocPhanRepository.searchAdvanced(
+                Optional.ofNullable(filter.maHp()).orElse(null),
+                Optional.ofNullable(filter.tenHocPhan()).orElse(""),
+                Optional.ofNullable(filter.soTinChi()).orElse(null),
+                Optional.ofNullable(filter.heSoHocPhan()).orElse(null)
+        );
+        return results.stream()
+                .map(HocPhanResponse::of)
+                .collect(Collectors.toList());
+    }
+
+
 }
