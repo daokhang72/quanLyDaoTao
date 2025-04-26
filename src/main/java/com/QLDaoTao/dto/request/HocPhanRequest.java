@@ -2,7 +2,6 @@ package com.QLDaoTao.dto.request;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 public record HocPhanRequest(
         @Min(0)
