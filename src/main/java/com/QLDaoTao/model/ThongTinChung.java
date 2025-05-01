@@ -36,5 +36,7 @@ public class ThongTinChung {
     private String website;
 
     private String banHanh;
+
+
     
 }
