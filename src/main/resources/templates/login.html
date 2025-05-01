@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            width: 970px;
+            height: 450px;
+            display: flex;
+            background: #fff;
+            border: none;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        .welcome-section {
+            flex: 1;
+            background: #b30000;
+            color: white;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-top-left-radius: 20px;
+            border-bottom-left-radius: 20px;
+        }
+
+        .welcome-section h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .welcome-section p {
+            font-size: 14px;
+            text-align: center;
+            max-width: 300px;
+        }
+
+        .form-section {
+            flex: 1;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .form-section h2 {
+            margin-bottom: 20px;
+            color: #a00000;
+        }
+
+        .form-section input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            background: #f28e8e;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .form-section button {
+            margin-top: 10px;
+            padding: 10px 30px;
+            background-color: #b30000;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-section p {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .form-section a {
+            text-decoration: none;
+            font-weight: bold;
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="welcome-section">
+        <h3>CHÀO MƯNG BẠN QUAY LẠI VỚI HỆ THỐNG QUẢN LÝ CHƯƠNG TRÌNH ĐÀO TẠO</h3>
+    </div>
+    <div class="form-section">
+        <h2>ĐĂNG NHẬP</h2>
+        <form method="post" action="/login">
+            <input type="email" name="email" placeholder="Email........" required />
+            <input type="password" name="password" placeholder="Mật khẩu........" required />
+            <p>Chưa có tài khoản? <a href="/register">Đăng ký</a></p>
+            <button type="submit">Đăng Nhập</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
