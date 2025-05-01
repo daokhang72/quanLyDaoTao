@@ -5,6 +5,7 @@ import com.QLDaoTao.dto.response.GiangVienResponse;
 import com.QLDaoTao.model.GiangVien;
 import com.QLDaoTao.repository.GiangVienRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

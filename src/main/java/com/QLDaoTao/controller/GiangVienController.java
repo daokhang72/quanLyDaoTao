@@ -4,6 +4,7 @@ import com.QLDaoTao.dto.request.GiangVienRequest;
 import com.QLDaoTao.dto.response.GiangVienResponse;
 import com.QLDaoTao.service.GiangVienService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
