@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Đăng nhập</title>
+  <style>
+    body{
+      margin: 0;
+    }
+    .container {
+      display: flex;
+      height: 100vh;
+    }
+
+    .sidebar {
+      width: 250px;
+      background-color: #ffe55c;
+      border-right: 2px solid #0097ff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .profile {
+      padding: 20px 0;
+      text-align: center;
+    }
+
+    .profile img {
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
+    }
+
+    .profile h3 {
+      margin-top: 10px;
+      font-size: 18px;
+    }
+
+    .menu {
+      width: 100%;
+    }
+
+    .menu a {
+      display: block;
+      padding: 12px 20px;
+      text-decoration: none;
+      color: black;
+      border-top: 1px solid #ddd;
+    }
+
+    .menu a.active {
+      background-color: white;
+      font-weight: bold;
+    }
+
+    .menu a:hover {
+      background-color: #fdd835;
+    }
+
+    .content {
+      flex: 1;
+      background-color: #f7f7f7;
+      padding: 40px;
+      text-align: center;
+    }
+    /*content*/
+    .search-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+    }
+
+    .search-input {
+      padding: 10px;
+      width: 300px;
+      border: 1px solid #ccc;
+      border-radius: 4px 0 0 4px;
+    }
+
+    .search-button {
+      padding: 10px;
+      background-color: #FFD700;
+      border: none;
+      border-radius: 0 4px 4px 0;
+      cursor: pointer;
+    }
+
+    .add-button-container {
+      text-align: right;
+      margin-bottom: 10px;
+    }
+
+    .add-button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .ctdt-table {
+      width: 100%;
+      border-collapse: collapse;
+      background-color: #fdf2b2;
+    }
+
+    .ctdt-table thead {
+      background-color: yellow;
+      font-weight: bold;
+    }
+
+    .ctdt-table th, .ctdt-table td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .ctdt-table td {
+      height: 30px;
+    }
+
+    .ctdt-table img:hover {
+      cursor: pointer;
+    }
+    .ctdt-table img {
+      width: 40px;
+      height: 24px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="sidebar">
+    <div class="profile">
+      <img src="https://via.placeholder.com/80" alt="Avatar">
+      <h3>Admin <span>👤</span></h3>
+    </div>
+    <nav class="menu">
+      <a href="#">Trang chủ</a>
+      <a class="active" href="#">Thông tin CTĐT</a>
+      <a href="#">Khung chương trình</a>
+      <a href="#">Danh mục học phần</a>
+      <a href="#">Đề cương chi tiết</a>
+      <a href="#">Kế hoạch dạy học</a>
+      <a href="#">Phân công giảng dạy</a>
+      <a href="#">Giảng viên</a>
+      <a href="#">Mẫu in</a>
+      <a href="#">Thống kê</a>
+      <a href="#">Quản lý người dùng</a>
+    </nav>
+  </div>
+  <main class="content">
+    <h1>Danh sách Chương trình đào tạo</h1>
+
+    <div class="search-container">
+      <input type="text" class="search-input" placeholder="Nhập tên, bậc, khoa quản lý, ..." />
+      <button class="search-button">🔍</button>
+    </div>
+
+    <div class="add-button-container">
+      <button class="add-button">➕ Thêm CTĐT</button>
+    </div>
+    <table class="ctdt-table">
+      <thead>
+      <tr>
+        <th>Tên CTĐT</th>
+        <th>Bậc</th>
+        <th>Loại bằng</th>
+        <th>Loại hình ĐT</th>
+        <th>Thời gian</th>
+        <th>Số tín chỉ</th>
+        <th>Khoa quản lý</th>
+        <th>Ngôn ngữ</th>
+        <th>Website</th>
+        <th>Ban hành</th>
+        <th>Tác vụ</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>Chương trình đào tạo A</td>
+        <td>Đại học</td>
+        <td>Cử nhân</td>
+        <td>Chính quy</td>
+        <td>4 năm</td>
+        <td>120</td>
+        <td>Khoa Công nghệ</td>
+        <td>Tiếng Việt</td>
+        <td><a href="http://example.com">website1.com</a></td>
+        <td>01/01/2020</td>
+        <td><button>Chỉnh sửa</button></td>
+      </tr>
+      <tr>
+        <td>Chương trình đào tạo B</td>
+        <td>Cao học</td>
+        <td>Thạc sĩ</td>
+        <td>Chính quy</td>
+        <td>2 năm</td>
+        <td>60</td>
+        <td>Khoa Kinh tế</td>
+        <td>Tiếng Anh</td>
+        <td><a href="http://example2.com">website2.com</a></td>
+        <td>15/03/2021</td>
+        <td><button>Chỉnh sửa</button></td>
+      </tr>
+      <tr>
+        <td>Chương trình đào tạo C</td>
+        <td>Đại học</td>
+        <td>Cử nhân</td>
+        <td>Bán thời gian</td>
+        <td>3 năm</td>
+        <td>90</td>
+        <td>Khoa Xây dựng</td>
+        <td>Tiếng Việt</td>
+        <td><a href="http://example3.com">website3.com</a></td>
+        <td>10/07/2019</td>
+        <td><button>Chỉnh sửa</button></td>
+      </tr>
+      <tr>
+        <td>Chương trình đào tạo D</td>
+        <td>Đại học</td>
+        <td>Cử nhân</td>
+        <td>Chính quy</td>
+        <td>4 năm</td>
+        <td>120</td>
+        <td>Khoa Điện tử</td>
+        <td>Tiếng Anh</td>
+        <td><a href="http://example4.com">website4.com</a></td>
+        <td>01/09/2020</td>
+        <td><img src="image/delete.svg" alt="Xóa"></td>
+      </tr>
+      <tr>
+        <td>Chương trình đào tạo E</td>
+        <td>Đại học</td>
+        <td>Cử nhân</td>
+        <td>Vừa làm vừa học</td>
+        <td>5 năm</td>
+        <td>150</td>
+        <td>Khoa Cơ khí</td>
+        <td>Tiếng Việt</td>
+        <td><a href="http://example5.com">website5.com</a></td>
+        <td>01/01/2021</td>
+        <td><button>Chỉnh sửa</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </main>
+</div>
+</body>
+</html>
