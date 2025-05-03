@@ -66,6 +66,11 @@
       text-align: center;
     }
     /*content*/
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     .search-container {
       display: flex;
       justify-content: center;
@@ -127,10 +132,6 @@
     .ctdt-table img:hover {
       cursor: pointer;
     }
-    .ctdt-table img {
-      width: 40px;
-      height: 24px;
-    }
   </style>
 </head>
 <body>
@@ -157,14 +158,16 @@
   <main class="content">
     <h1>Danh sách Chương trình đào tạo</h1>
 
-    <div class="search-container">
-      <input type="text" class="search-input" placeholder="Nhập tên, bậc, khoa quản lý, ..." />
-      <button class="search-button">🔍</button>
+    <div class="top-bar">
+      <div class="search-container">
+        <input type="text" class="search-input" placeholder="Nhập tên, bậc, khoa quản lý, ..." />
+        <button class="search-button">🔍</button>
+      </div>
+      <div class="add-button-container">
+        <button class="add-button">➕ Thêm CTĐT</button>
+      </div>
     </div>
 
-    <div class="add-button-container">
-      <button class="add-button">➕ Thêm CTĐT</button>
-    </div>
     <table class="ctdt-table">
       <thead>
       <tr>
@@ -183,45 +186,6 @@
       </thead>
       <tbody>
       <tr>
-        <td>Chương trình đào tạo A</td>
-        <td>Đại học</td>
-        <td>Cử nhân</td>
-        <td>Chính quy</td>
-        <td>4 năm</td>
-        <td>120</td>
-        <td>Khoa Công nghệ</td>
-        <td>Tiếng Việt</td>
-        <td><a href="http://example.com">website1.com</a></td>
-        <td>01/01/2020</td>
-        <td><button>Chỉnh sửa</button></td>
-      </tr>
-      <tr>
-        <td>Chương trình đào tạo B</td>
-        <td>Cao học</td>
-        <td>Thạc sĩ</td>
-        <td>Chính quy</td>
-        <td>2 năm</td>
-        <td>60</td>
-        <td>Khoa Kinh tế</td>
-        <td>Tiếng Anh</td>
-        <td><a href="http://example2.com">website2.com</a></td>
-        <td>15/03/2021</td>
-        <td><button>Chỉnh sửa</button></td>
-      </tr>
-      <tr>
-        <td>Chương trình đào tạo C</td>
-        <td>Đại học</td>
-        <td>Cử nhân</td>
-        <td>Bán thời gian</td>
-        <td>3 năm</td>
-        <td>90</td>
-        <td>Khoa Xây dựng</td>
-        <td>Tiếng Việt</td>
-        <td><a href="http://example3.com">website3.com</a></td>
-        <td>10/07/2019</td>
-        <td><button>Chỉnh sửa</button></td>
-      </tr>
-      <tr>
         <td>Chương trình đào tạo D</td>
         <td>Đại học</td>
         <td>Cử nhân</td>
@@ -232,20 +196,7 @@
         <td>Tiếng Anh</td>
         <td><a href="http://example4.com">website4.com</a></td>
         <td>01/09/2020</td>
-        <td><img src="image/delete.svg" alt="Xóa"></td>
-      </tr>
-      <tr>
-        <td>Chương trình đào tạo E</td>
-        <td>Đại học</td>
-        <td>Cử nhân</td>
-        <td>Vừa làm vừa học</td>
-        <td>5 năm</td>
-        <td>150</td>
-        <td>Khoa Cơ khí</td>
-        <td>Tiếng Việt</td>
-        <td><a href="http://example5.com">website5.com</a></td>
-        <td>01/01/2021</td>
-        <td><button>Chỉnh sửa</button></td>
+        <td><img src="image/delete.svg" alt="Xóa"><img src="image/edit.svg" alt="Xóa"></td>
       </tr>
       </tbody>
     </table>
