@@ -138,7 +138,7 @@
 <div class="container">
   <div class="sidebar">
     <div class="profile">
-      <img src="https://via.placeholder.com/80" alt="Avatar">
+      <img src="image/user.svg" alt="Avatar">
       <h3>Admin <span>👤</span></h3>
     </div>
     <nav class="menu">
@@ -185,27 +185,48 @@
       </tr>
       </thead>
       <tbody>
-      <tr>
-        <td>Chương trình đào tạo D</td>
-        <td>Đại học</td>
-        <td>Cử nhân</td>
-        <td>Chính quy</td>
-        <td>4 năm</td>
-        <td>120</td>
-        <td>Khoa Điện tử</td>
-        <td>Tiếng Anh</td>
-        <td><a href="http://example4.com">website4.com</a></td>
-        <td>01/09/2020</td>
-        <td><img src="image/delete.svg" alt="Xóa"><img src="image/edit.svg" alt="Xóa"></td>
-      </tr>
+
       </tbody>
     </table>
   </main>
 </div>
 <script src="js/ctdtJSAPI.js"></script>
 <script>
-  getAllCTDT();
+  loadCTDT();
+  function loadCTDT() {
+    getAllCTDT().then(data => {
+      const table = document.querySelector('.ctdt-table');
+      let tbody = table.querySelector('tbody');
 
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+                <td>${item.tenCtdt}</td>
+                <td>${item.bac}</td>
+                <td>${item.loaiBang}</td>
+                <td>${item.loaiHinhDaoTao}</td>
+                <td>${item.thoiGian}</td>
+                <td>${item.soTinChi}</td>
+                <td>${item.khoaQuanLy}</td>
+                <td>${item.ngonNgu}</td>
+                <td><a href="${item.website}" target="_blank">${item.website}</a></td>
+                <td>${item.banHanh}</td>
+                <td style="white-space: nowrap;"><img src="image/delete.svg" alt="Xóa" onclick="deleteCTDT('${item.id}')"><img src="image/edit.svg" alt="Chỉnh sửa" onclick="editCTDT('${item.id}')"></td>
+            `;
+
+        tbody.appendChild(row);
+      });
+    }).catch(error => {
+      console.error('Lỗi khi tải dữ liệu:', error);
+    });
+  }
+
+  function deleteCTDT(id) {
+  }
+  function editCTDT(id) {
+  }
 </script>
 </body>
 </html>
