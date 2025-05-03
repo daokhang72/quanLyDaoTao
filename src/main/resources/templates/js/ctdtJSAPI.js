@@ -1,4 +1,4 @@
-const URL = 'http://localhost:8080'
+const URL = 'http://localhost:8081'
 function getAllCTDT() {
     return fetch(URL+'/thongtin')
         .then(response => response.json())
