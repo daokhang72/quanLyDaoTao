@@ -29,8 +29,38 @@ public class UserController {
     public String showLoginForm() {
         return "login";
     }
+    @GetMapping("/homeAdmin")
+    public String showAdminHome(){
+        return "homeAdmin";
+    }
+    @GetMapping("/CTDTAdmin")
+    public String showCTDTAdmin(){
+        return "CTDTAdmin";
+    }
     @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody UserRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }
+    @PostMapping("/login")
+    public String login(@RequestParam("email") String userEmail,
+                        @RequestParam("password") String userPassword,
+                        Model model) {
+        try {
+            UserRequest request = new UserRequest(null, userEmail, userPassword, null, false);
+            UserResponse response = userService.login(request);
+
+            if (response.isAdmin()) {
+                return "homeAdmin";
+            } else {
+                model.addAttribute("error", "Bạn không có quyền truy cập!");
+                return "login";
+            }
+        } catch (RuntimeException ex) {
+            model.addAttribute("error", ex.getMessage());
+            return "login";
+        }
+    }
+
+
+
 }

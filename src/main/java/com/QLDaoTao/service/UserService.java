@@ -24,4 +24,17 @@ public class UserService {
         user.setAdmin(request.isAdmin());
         return UserResponse.of(userRepository.save(user));
     }
+    public User checkLogin(String email, String password) {
+        return userRepository.findByUserEmailAndUserPassword(email, password).orElse(null);
+    }
+    public UserResponse login(UserRequest request){
+        User user = userRepository.findByUserEmailAndUserPassword(request.userEmail(), request.userPassword())
+                .orElseThrow(() -> new RuntimeException("Email hoặc mật khẩu không đúng"));
+
+        if (!user.isAdmin()) {
+            throw new RuntimeException("Bạn không có quyền truy cập trang admin");
+        }
+
+        return UserResponse.of(user);
+    }
 }
