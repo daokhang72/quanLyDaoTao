@@ -227,7 +227,7 @@
         <td>${item.banHanh}</td>
         <td style="white-space: nowrap;">
           <img src="image/delete.svg" alt="Xóa" onclick="deleteCTDT('${item.ctdtId}')">
-          <img src="image/edit.svg" alt="Chỉnh sửa" onclick="editCTDT(this)">
+          <img src="image/edit.svg" alt="Chỉnh sửa" onclick="editCTDT(${item.ctdtId},this)">
         </td>
       `;
         tbody.appendChild(row);
@@ -241,11 +241,11 @@
     createConfirmPortal(id);
   }
 
-  function editCTDT(button) {
+  function editCTDT(id,button) {
     const row = button.closest('tr');
 
     const data = {
-      ctdtId: row.dataset.ctdtId,
+      ctdtId: id,
       tenCtdt: row.dataset.tenCtdt,
       bac: row.dataset.bac,
       loaiBang: row.dataset.loaiBang,
@@ -373,9 +373,13 @@
   function createFormAddPortal() {
     createFormPortal('Thêm Chương Trình Đào Tạo', null, (formData) => {
       createCTDT(formData)
-              .then(() => {
-                showBottomNotification("Thêm thành công!", true);
-                loadCTDT();
+              .then((response) => {
+                if(response.status==200){
+                  showBottomNotification("Thêm thành công!", true);
+                  loadCTDT();
+                }else{
+                  showBottomNotification(response.data.data.message, false);
+                }
               })
               .catch(() => {
                 showBottomNotification("Thêm thất bại!", false);
@@ -384,17 +388,22 @@
   }
 
   function createFormEditPortal(data) {
-    createFormPortal('Chỉnh Sửa Chương Trình Đào Tạo', data, (formData) => {
-      updateCTDTById(data.id, formData)
-              .then(() => {
-                showBottomNotification("Cập nhật thành công!", true);
-                loadCTDT();
+    createFormPortal('Chỉnh Sửa Chương Trình Đào Tạo', data, (id,formData) => {
+      return updateCTDTById(id, formData)
+              .then((response) => {
+                if(response.status==200){
+                  showBottomNotification("Sửa thành công!", true);
+                  loadCTDT();
+                }else{
+                  showBottomNotification(response.data.data.message, false);
+                }
               })
               .catch(() => {
-                showBottomNotification("Cập nhật thất bại!", false);
+                showBottomNotification("Sửa thất bại!", false);
               });
     });
   }
+
 
   function createFormPortal(title, initialData, onSubmit) {
     const overlay = document.createElement('div');
@@ -415,8 +424,8 @@
       { name: 'bac', label: 'Bậc' },
       { name: 'loaiBang', label: 'Loại bằng' },
       { name: 'loaiHinhDaoTao', label: 'Loại hình đào tạo' },
-      { name: 'thoiGian', label: 'Thời gian', type: 'number' },
-      { name: 'soTinChi', label: 'Số tín chỉ', type: 'number' },
+      { name: 'thoiGian', label: 'Thời gian', type: 'number'},
+      { name: 'soTinChi', label: 'Số tín chỉ', type: 'number'},
       { name: 'khoaQuanLy', label: 'Khoa quản lý' },
       { name: 'ngonNgu', label: 'Ngôn ngữ' },
       { name: 'website', label: 'Website' },
@@ -427,6 +436,7 @@
     fields.forEach(({ name, label, type = 'text' }) => {
       const input = document.createElement('input');
       input.type = type;
+      input.step = 'any';
       input.name = name;
       input.required = true;
       input.placeholder = label;
@@ -469,11 +479,12 @@
     form.onsubmit = (e) => {
       e.preventDefault();
       const formData = {};
-      fields.forEach(({ name }) => {
+      fields.forEach(({name}) => {
         const val = form.elements[name].value;
         formData[name] = isNaN(val) ? val : parseFloat(val);
       });
-      onSubmit(formData);
+      console.log(initialData)
+      onSubmit(initialData.ctdtId,formData);
       document.body.removeChild(overlay);
     };
   }

@@ -29,7 +29,7 @@ public record ThongTinChungRequest(
         String ngonNgu,
 
         @NotNull(message = "Website không được để trống")
-        @Size(min = 5, message = "Website phải có ít nhất 5 ký tự")
+        @Size(min = 1, message = "Website phải có ít nhất 1 ký tự")
         String website,
 
         @NotNull(message = "Ban hành không được để trống")
