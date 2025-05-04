@@ -160,8 +160,8 @@
 
     <div class="top-bar">
       <div class="search-container">
-        <input type="text" class="search-input" placeholder="Nhập tên, bậc, khoa quản lý, ..." />
-        <button class="search-button">🔍</button>
+        <input type="text" id="searchInput" class="search-input" placeholder="Nhập tên, bậc, khoa quản lý, ..." />
+        <button class="search-button" onclick="handleSearch()">🔍</button>
       </div>
       <div class="add-button-container">
         <button class="add-button" onclick="addCTDT()">➕ Thêm CTĐT</button>
@@ -488,7 +488,52 @@
       document.body.removeChild(overlay);
     };
   }
+  function handleSearch() {
+    const keyword = document.getElementById("searchInput").value.trim();
+    if (keyword) {
+      timKiemThongTinChung(keyword).then(data => {
+        const table = document.querySelector('.ctdt-table');
+        let tbody = table.querySelector('tbody');
 
+        tbody.innerHTML = '';
+
+        data.forEach(item => {
+          const row = document.createElement('tr');
+          row.dataset.ctdtId = item.ctdtId;
+          row.dataset.tenCtdt = item.tenCtdt;
+          row.dataset.bac = item.bac;
+          row.dataset.loaiBang = item.loaiBang;
+          row.dataset.loaiHinhDaoTao = item.loaiHinhDaoTao;
+          row.dataset.thoiGian = item.thoiGian;
+          row.dataset.soTinChi = item.soTinChi;
+          row.dataset.khoaQuanLy = item.khoaQuanLy;
+          row.dataset.ngonNgu = item.ngonNgu;
+          row.dataset.website = item.website;
+          row.dataset.banHanh = item.banHanh;
+
+          row.innerHTML = `
+        <td>${item.tenCtdt}</td>
+        <td>${item.bac}</td>
+        <td>${item.loaiBang}</td>
+        <td>${item.loaiHinhDaoTao}</td>
+        <td>${item.thoiGian}</td>
+        <td>${item.soTinChi}</td>
+        <td>${item.khoaQuanLy}</td>
+        <td>${item.ngonNgu}</td>
+        <td><a href="${item.website}" target="_blank">${item.website}</a></td>
+        <td>${item.banHanh}</td>
+        <td style="white-space: nowrap;">
+          <img src="image/delete.svg" alt="Xóa" onclick="deleteCTDT('${item.ctdtId}')">
+          <img src="image/edit.svg" alt="Chỉnh sửa" onclick="editCTDT(${item.ctdtId},this)">
+        </td>
+      `;
+          tbody.appendChild(row);
+        });
+      }).catch(error => {
+        console.error('Lỗi khi tải dữ liệu:', error);
+      });
+    }
+  }
 </script>
 </body>
 </html>

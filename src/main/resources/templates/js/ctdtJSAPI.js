@@ -64,3 +64,10 @@ function updateCTDTById(id,formData) {
             throw error;
         });
 }
+function timKiemThongTinChung(keyWord) {
+    return fetch(`${URL}/thongtin/find?keyword=${encodeURIComponent(keyWord)}`)
+        .then(response => response.json())
+        .catch(error => {
+            console.error("Error:", error);
+        });
+}

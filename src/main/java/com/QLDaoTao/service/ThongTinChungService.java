@@ -56,4 +56,8 @@ public class ThongTinChungService {
     public void xoaThongTinChung(int id) {
         repository.deleteById(id);
     }
+
+    public List<ThongTinChungResponse> timKiemThongTinChung(String keyword) {
+        return repository.searchByKeyword(keyword).stream().map(ThongTinChungResponse::of).collect(Collectors.toList());
+    }
 }

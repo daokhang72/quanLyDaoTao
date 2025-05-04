@@ -37,4 +37,9 @@ public class ThongTinChungController {
         service.xoaThongTinChung(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/find")
+    public ResponseEntity<List<ThongTinChungResponse>> timKiemThongTinChung(@RequestParam String keyword) {
+        return ResponseEntity.ok(service.timKiemThongTinChung(keyword));
+    }
 }
