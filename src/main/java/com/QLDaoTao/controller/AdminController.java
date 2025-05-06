@@ -16,4 +16,8 @@ public class AdminController {
     public String ctdtAdmin() {
         return "CTDTAdmin";
     }
+    @GetMapping("/khung")
+    public String khungCTAdmin() {
+        return "KhungCTAdmin";
+    }
 }
