@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <style>
+        body{
+          margin: 0;
+        }
+        .container {
+          display: flex;
+          height: 100vh;
+        }
+
+        .sidebar {
+          width: 250px;
+          background-color: #ffe55c;
+          border-right: 2px solid #0097ff;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .profile {
+          padding: 20px 0;
+          text-align: center;
+        }
+
+        .profile img {
+          border-radius: 50%;
+          width: 80px;
+          height: 80px;
+        }
+
+        .profile h3 {
+          margin-top: 10px;
+          font-size: 18px;
+        }
+
+        .menu {
+          width: 100%;
+        }
+
+        .menu a {
+          display: block;
+          padding: 12px 20px;
+          text-decoration: none;
+          color: black;
+          border-top: 1px solid #ddd;
+        }
+
+        .menu a.active {
+          background-color: white;
+          font-weight: bold;
+        }
+
+        .menu a:hover {
+          background-color: #fdd835;
+        }
+
+        .content {
+          flex: 1;
+          background-color: #f7f7f7;
+          padding: 40px;
+          text-align: center;
+        }
+        /*content*/
+        .top-bar {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .search-container {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 20px 0;
+        }
+
+        .search-input {
+          padding: 10px;
+          width: 300px;
+          border: 1px solid #ccc;
+          border-radius: 4px 0 0 4px;
+        }
+
+        .search-button {
+          padding: 10px;
+          background-color: #FFD700;
+          border: none;
+          border-radius: 0 4px 4px 0;
+          cursor: pointer;
+        }
+
+        .button-container {
+          text-align: right;
+          margin-bottom: 10px;
+        }
+
+        .import-button .export-button .add-button, .filter-button {
+          width: 180px; 
+          text-align: center;
+        }
+
+        .add-button {
+          background-color: #4CAF50;
+          color: white;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+          border: 2px solid black;
+        }
+        .filter-button {
+          background-color: rgb(255, 255, 255);
+          color: black;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+          border: 2px solid black;
+        }
+
+        .import-button {
+          background-color: rgb(255, 255, 255);
+          color: black;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+          border: 2px solid black;
+        }
+
+        .export-button {
+          background-color: rgb(255, 255, 255);
+          color: black;
+          padding: 10px 20px;
+          border: none;
+          border-radius: 6px;
+          font-weight: bold;
+          cursor: pointer;
+          border: 2px solid black;
+        }
+
+        .gv-table {
+          width: 100%;
+          border-collapse: collapse;
+          background-color: #fdf2b2;
+        }
+
+        .gv-table thead {
+          background-color: yellow;
+          font-weight: bold;
+        }
+
+        .gv-table th, .hp-table td {
+          border: 1px solid #ccc;
+          padding: 8px;
+          text-align: center;
+        }
+
+        .gv-table td {
+          height: 30px;
+        }
+
+        .gv-table img:hover {
+          cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="sidebar">
+        <div class="profile">
+            <img src="image/user.svg" alt="Avatar">
+            <h3>Admin <span>👤</span></h3>
+        </div>
+        <nav class="menu">
+            <a href="/admin/home">Trang chủ</a>
+            <a href="/admin/CTDT">Thông tin CTĐT</a>
+            <a href="/admin/khung">Khung chương trình</a>
+            <a href="#">Danh mục học phần</a>
+            <a href="#">Đề cương chi tiết</a>
+            <a href="#">Kế hoạch dạy học</a>
+            <a href="#">Kế hoạch mở nhóm</a>
+            <a href="#">Phân công giảng dạy</a>
+            <a class="active" href="#">Giảng viên</a>
+            <a href="#">Mẫu in</a>
+            <a href="#">Thống kê</a>
+            <a href="#">Quản lý người dùng</a>
+        </nav>
+    </div>
+    <main class="content">
+        <h1>Danh sách giảng viên</h1>
+        <div class="top-bar">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input"
+                       placeholder="Nhập tên giảng viên ..."/>
+                <button class="search-button" onclick="handleSearch()">🔍</button>
+            </div>
+            <div class="button-container">
+                <button class="import-button">Import Excel 📥</button>
+                <button class="export-button">Export Excel 📤 </button>
+                <button class="filter-button">Thống kê 📊</button>
+                <button class="add-button" onclick="addCTDT()">➕ Thêm Học Phần</button>
+            </div>
+        </div>
+
+        <table class="gv-table">
+            <thead>
+            <tr>
+                <th>Tên giảng viên</th>
+                <th>Loại giảng viên</th>
+                <th>Đơn vị</th>
+                <th>Email</th>
+                <th>Số điện thoại</th>
+                <th>Tác vụ</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </main>
+</div>
+</body>
+</html>
