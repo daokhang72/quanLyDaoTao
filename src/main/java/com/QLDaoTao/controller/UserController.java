@@ -2,6 +2,7 @@ package com.QLDaoTao.controller;
 
 import com.QLDaoTao.dto.request.UserRequest;
 import com.QLDaoTao.dto.response.UserResponse;
+import com.QLDaoTao.model.User;
 import com.QLDaoTao.repository.UserRepository;
 import com.QLDaoTao.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
+
 @RequiredArgsConstructor
 @Controller
 public class UserController {
@@ -60,7 +64,5 @@ public class UserController {
             return "login";
         }
     }
-
-
 
 }
