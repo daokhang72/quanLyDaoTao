@@ -173,6 +173,32 @@
     .user-table img:hover {
       cursor: pointer;
     }
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      width: 400px;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .user-table tbody tr.selected {
+        background-color: #f0f8ff;
+    }
+
+}
 </style>
 <body>
 <div class="container">
@@ -222,7 +248,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="user : ${users}">
+            <tr th:each="user : ${users}" th:attr="data-id=${user.userId}">
                 <td th:text="${user.userName}">Tên người dùng</td>
                 <td th:text="${user.userEmail}">Email</td>
                 <td th:text="${user.userPassword}">Mật khẩu</td>
@@ -231,41 +257,256 @@
             </tr>
             </tbody>
         </table>
+        <!-- Modal thêm người dùng -->
+        <div id="addUserModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Thêm người dùng</h3>
+                <form id="addUserForm">
+                    <input type="hidden" id="userId" name="userId">
+
+                    <label for="userName">Tên người dùng:</label>
+                    <input type="text" id="userName" name="userName" required><br><br>
+
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="userEmail" name="userEmail" required><br><br>
+
+                    <label for="userPassword">Mật khẩu:</label>
+                    <input type="password" id="userPassword" name="userPassword" required><br><br>
+
+                    <label for="userFullName">Họ tên người dùng:</label>
+                    <input type="text" id="userFullName" name="userFullName" required><br><br>
+
+                    <label for="isAdmin">Là admin:</label>
+                    <input type="checkbox" id="isAdmin" name="isAdmin"><br><br>
+
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="document.getElementById('addUserModal').style.display='none'">Hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+        <!-- Modal chỉnh sửa người dùng -->
+        <div id="EditUserModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Chỉnh sửa người dùng</h3>
+                <form method="post" id="EditUserForm">
+                    <input type="hidden" id="editUserId" name="userId">
+
+                    <label for="userName">Tên người dùng:</label>
+                    <input type="text" id="editUserName" name="userName" required><br><br>
+
+                    <label for="userEmail">Email:</label>
+                    <input type="email" id="editUserEmail" name="userEmail" required><br><br>
+
+                    <label for="userPassword">Mật khẩu:</label>
+                    <input type="text" id="editUserPassword" name="userPassword" required><br><br>
+
+                    <label for="userFullName">Họ tên người dùng:</label>
+                    <input type="text" id="editUserFullName" name="userFullName" required><br><br>
+
+                    <label for="isAdmin">Là admin:</label>
+                    <input type="checkbox" id="editIsAdmin" name="isAdmin"><br><br>
+
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="document.getElementById('EditUserModal').style.display='none'">Hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </main>
 </div>
 <script>
-    // Click chọn dòng
-    document.querySelector('.user-table tbody').addEventListener('click', function (e) {
-      const rows = this.querySelectorAll('tr');
-      rows.forEach(row => row.classList.remove('selected'));
-      const selected = e.target.closest('tr');
-      if (selected) {
-        selected.classList.add('selected');
-      }
+    function handleSearch() {
+    const input = document.getElementById("searchInput").value.toLowerCase();
+    const rows = document.querySelectorAll(".user-table tbody tr");
+
+    rows.forEach(row => {
+        const userName = row.cells[0].innerText.toLowerCase(); // Cột đầu tiên là tên người dùng
+        if (userName.includes(input)) {
+            row.style.display = ""; // Hiển thị
+        } else {
+            row.style.display = "none"; // Ẩn
+        }
     });
+}
 
-    function editUser() {
-      const selected = document.querySelector('.user-table tbody .selected');
-      if (!selected) {
-        alert("Vui lòng chọn người dùng cần sửa.");
-        return;
-      }
-      const username = selected.cells[0].textContent;
-      alert("Bạn đang sửa người dùng: " + username);
-      // TODO: Hiển thị form sửa dữ liệu người dùng ở đây
+    function addCTDT() {
+        document.getElementById("addUserModal").style.display = "flex";
+    }
+    document.getElementById("addUserForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = {
+            userName: document.getElementById("userName").value,
+            userEmail: document.getElementById("userEmail").value,
+            userPassword: document.getElementById("userPassword").value,
+            userFullName: document.getElementById("userFullName").value,
+            isAdmin: document.getElementById("isAdmin").checked
+        };
+
+        fetch("/admin/user/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("Thêm người dùng thành công!");
+                document.getElementById("addUserModal").style.display = "none";
+                loadUser(); // gọi hàm cập nhật danh sách
+            } else {
+                alert("Lỗi khi thêm người dùng!");
+            }
+        })
+        .catch(err => {
+            console.error("Lỗi gửi dữ liệu:", err);
+            alert("Đã xảy ra lỗi kết nối.");
+        });
+    });
+    function loadUser() {
+        fetch("/admin/user/list")
+            .then(res => res.json())
+            .then(users => {
+                const tbody = document.querySelector(".user-table tbody");
+                tbody.innerHTML = "";
+
+                users.forEach(user => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${user.userName}</td>
+                        <td>${user.userEmail}</td>
+                        <td>${user.userPassword}</td>
+                        <td>${user.userFullName}</td>
+                        <td>${user.isAdmin ? "✔️" : "❌"}</td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(err => console.error("Không thể tải danh sách người dùng:", err));
+    }
+    function fillEditFormFromRow(row) {
+    try {
+        const cells = row.getElementsByTagName("td");
+
+        if (cells.length < 5) {
+            alert("Dữ liệu người dùng không đầy đủ.");
+            return;
+        }
+
+        const userId = row.getAttribute("data-id");
+        const userName = cells[0].innerText;
+        const userEmail = cells[1].innerText;
+        const userPassword = cells[2].innerText;
+        const userFullName = cells[3].innerText;
+        const isAdminText = cells[4].innerText.trim();
+        const isAdmin = isAdminText === "✔️";
+
+        document.getElementById("editUserId").value = userId;
+        document.getElementById("editUserName").value = userName;
+        document.getElementById("editUserEmail").value = userEmail;
+        document.getElementById("editUserPassword").value = userPassword;
+        document.getElementById("editUserFullName").value = userFullName;
+        document.getElementById("editIsAdmin").checked = isAdmin;
+    } catch (e) {
+        console.error("Lỗi trong fillEditFormFromRow:", e);
+        alert("Không thể điền dữ liệu vào form. Kiểm tra bảng và dữ liệu.");
+    }
+}
+
+   function editUser() {
+        const selectedRow = document.querySelector(".user-table tbody tr.selected");
+        if (!selectedRow) {
+            alert("Vui lòng chọn 1 người dùng để sửa");
+            return;
+        }
+
+        fillEditFormFromRow(selectedRow);
+        document.getElementById("EditUserModal").style.display = "flex";
     }
 
+
+// Gửi form sau khi chỉnh sửa
+document.getElementById("EditUserForm").addEventListener("submit", function(event) {
+    event.preventDefault();  // Ngừng hành động mặc định của form (reload trang)
+
+    const formData = new FormData(this);
+    const userId = formData.get('userId');
+    const userName = formData.get('userName');
+    const userEmail = formData.get('userEmail');
+    const userPassword = formData.get('userPassword');
+    const userFullName = formData.get('userFullName');
+    const isAdmin = formData.get('isAdmin') ? true : false;
+
+    const user = {
+        userId: userId,
+        userName: userName,
+        userEmail: userEmail,
+        userPassword: userPassword,
+        userFullName: userFullName,
+        isAdmin: isAdmin
+    };
+
+    // Gửi dữ liệu chỉnh sửa lên backend
+    fetch('/admin/user/update', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(user)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert('Cập nhật thành công!');
+            location.reload();  // Reload lại trang để hiển thị dữ liệu mới
+        } else {
+            alert('Cập nhật thất bại!');
+        }
+    })
+    .catch(error => {
+        console.error('Có lỗi xảy ra:', error);
+        alert('Có lỗi xảy ra trong quá trình cập nhật!');
+    });
+});
+
+document.querySelectorAll(".user-table tbody tr").forEach(row => {
+    row.addEventListener("click", function () {
+        document.querySelectorAll(".user-table tbody tr").forEach(r => r.classList.remove("selected"));
+        this.classList.add("selected");
+    });
+});
     function deleteUser() {
-      const selected = document.querySelector('.user-table tbody .selected');
-      if (!selected) {
-        alert("Vui lòng chọn người dùng cần xóa.");
+    const selectedRow = document.querySelector(".user-table tbody tr.selected");
+    if (!selectedRow) {
+        alert("Vui lòng chọn 1 người dùng để xóa");
         return;
-      }
-      const username = selected.cells[0].textContent;
-      if (confirm("Bạn có chắc chắn muốn xóa người dùng: " + username + " ?")) {
-        selected.remove(); // Tạm xóa dòng khỏi bảng (có thể gọi API thật ở đây)
-      }
     }
+
+    const userId = selectedRow.getAttribute("data-id");
+
+    // Xác nhận xóa người dùng
+    if (confirm("Bạn có chắc chắn muốn xóa người dùng này?")) {
+        // Gửi yêu cầu xóa người dùng tới backend
+        fetch(`/admin/user/delete/${userId}`, {
+            method: 'DELETE',
+        })
+        .then(response => {
+            if (response.ok) {
+                alert('Xóa người dùng thành công!');
+                location.reload();  // Reload lại trang sau khi xóa thành công
+            } else {
+                alert('Xóa người dùng thất bại!');
+            }
+        })
+        .catch(error => {
+            console.error('Có lỗi xảy ra:', error);
+            alert('Có lỗi xảy ra trong quá trình xóa!');
+        });
+    }
+}
+
 </script>
 </body>
 </html>

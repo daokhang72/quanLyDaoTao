@@ -4,10 +4,11 @@ import com.QLDaoTao.model.User;
 import com.QLDaoTao.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RequiredArgsConstructor
@@ -61,9 +62,41 @@ public class AdminController {
     @GetMapping("/user")
     public String User(Model model) {
         List<User> users = userRepository.findAll();
-        System.out.println(">>> Size = " + users.size()); // debug
         model.addAttribute("users", users);
+        model.addAttribute("user", new User());
         return "User";
+    }
+    @PostMapping("/user/add")
+    @ResponseBody
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        try {
+            userRepository.save(user);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Lỗi thêm người dùng");
+        }
+    }
+
+    @GetMapping("/user/list")
+    @ResponseBody
+    public List<User> getAllUsers() {
+        return userRepository.findAll();
+    }
+    @PostMapping("/user/update")
+    @ResponseBody
+    public ResponseEntity<?> updateUser(@RequestBody User user) {
+        userRepository.save(user);
+        return ResponseEntity.ok("Cập nhật thành công");
+    }
+    @DeleteMapping("/user/delete/{userId}")
+    @ResponseBody
+    public ResponseEntity<?> deleteUser(@PathVariable int userId) {
+        try {
+            userRepository.deleteById(userId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Có lỗi xảy ra khi xóa người dùng!");
+        }
     }
 
 
