@@ -14,9 +14,8 @@ import lombok.Setter;
 @Table(name = "ctdt_giangvien")
 public class GiangVien {
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int giangVienId;
-	
+
     private int userId;
 
     private String hoTen;

@@ -170,13 +170,37 @@
         .gv-table img:hover {
           cursor: pointer;
         }
+        .modal-overlay {
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background: rgba(0,0,0,0.5);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          z-index: 9999;
+        }
+
+        .modal-content {
+          background: #fff;
+          padding: 30px;
+          border-radius: 10px;
+          width: 400px;
+          text-align: center;
+          box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .gv-table tbody tr.selected {
+            background-color: #f0f8ff;
+        }
     </style>
 </head>
 <body>
 <div class="container">
     <div class="sidebar">
         <div class="profile">
-            <img src="image/user.svg" alt="Avatar">
+            <img src="image/giangvien.svg" alt="Avatar">
             <h3>Admin <span>👤</span></h3>
         </div>
         <nav class="menu">
@@ -204,15 +228,16 @@
             </div>
             <div class="button-container">
                 <button class="import-button">Import Excel 📥</button>
-                <button class="export-button">Export Excel 📤 </button>
-                <button class="filter-button">Thống kê 📊</button>
-                <button class="add-button" onclick="addCTDT()">➕ Thêm Học Phần</button>
+                <button class="export-button">Export Excel 📤</button>
+                <button class="filter-button" onclick="showThongKeGV()">Thống kê 📊</button>
+                <button class="add-button" onclick="addGV()">➕ Thêm Giảng Viên</button>
             </div>
         </div>
 
         <table class="gv-table">
             <thead>
             <tr>
+                <th>Giảng viên ID</th>
                 <th>Tên giảng viên</th>
                 <th>Loại giảng viên</th>
                 <th>Đơn vị</th>
@@ -222,9 +247,350 @@
             </tr>
             </thead>
             <tbody>
+            <tr th:each="gv : ${giangviens}" th:data-userid="${gv.userId}">
+                <td th:text="${gv.giangVienId}">Giảng viên ID</td>
+                <td th:text="${gv.hoTen}">Tên giảng viên</td>
+                <td th:text="${gv.loaiGiangVien}">Loại giảng viên</td>
+                <td th:text="${gv.donVi}">Đơn vị</td>
+                <td th:text="${gv.email}">Email</td>
+                <td th:text="${gv.soDienThoai}">Số điện thoại</td>
+                <td>
+                    <button onclick="editGV(this)">✏️</button>
+                    <button onclick="deleteGV(this)">🗑️</button>
+                </td>
+            </tr>
             </tbody>
         </table>
+        <!-- Modal thêm giảng viên -->
+        <div id="addGVModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Thêm Giảng Viên</h3>
+                <form id="addGVForm">
+                    <label for="giangVienId">Mã Giảng Viên (ID):</label>
+                    <input type="text" id="giangVienId" name="giangVienId" required><br><br>
+
+                    <label for="userId">Tài khoản người dùng:</label>
+                    <select id="userId" name="userId" required>
+                        <option value="">-- Chọn tài khoản --</option>
+                        <th:block th:each="user : ${users}">
+                            <option th:value="${user.userId}"
+                                    th:text="${user.userFullName} + ' (' + ${user.userEmail} + ')'">
+                            </option>
+                        </th:block>
+                    </select><br><br>
+
+                    <label for="hoTen">Tên giảng viên:</label>
+                    <input type="text" id="hoTen" name="hoTen" required><br><br>
+
+                    <label for="loaiGiangVien">Loại giảng viên:</label>
+                    <input type="text" id="loaiGiangVien" name="loaiGiangVien" required><br><br>
+
+                    <label for="donVi">Đơn vị:</label>
+                    <input type="text" id="donVi" name="donVi" required><br><br>
+
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required><br><br>
+
+                    <label for="soDienThoai">Số điện thoại:</label>
+                    <input type="tel" id="soDienThoai" name="soDienThoai" required><br><br>
+
+                    <button type="submit">Lưu</button>
+                    <button type="button" onclick="document.getElementById('addGVModal').style.display='none'">Hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal chỉnh sửa giảng viên -->
+        <div id="editGVModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Chỉnh sửa Giảng Viên</h3>
+                <form id="editGVForm">
+                    <label for="editGiangVienId">Mã Giảng Viên (ID):</label>
+                    <input type="text" id="editGiangVienId" name="giangVienId" readonly><br><br>
+
+                    <label for="editUserId">Tài khoản người dùng:</label>
+                    <select id="editUserId" name="userId" required>
+                        <option value="">-- Chọn tài khoản --</option>
+                        <th:block th:each="user : ${users}">
+                            <option th:value="${user.userId}"
+                                    th:text="${user.userFullName} + ' (' + ${user.userEmail} + ')'">
+                            </option>
+                        </th:block>
+                    </select><br><br>
+
+                    <label for="editHoTen">Tên giảng viên:</label>
+                    <input type="text" id="editHoTen" name="hoTen" required><br><br>
+
+                    <label for="editLoaiGiangVien">Loại giảng viên:</label>
+                    <input type="text" id="editLoaiGiangVien" name="loaiGiangVien" required><br><br>
+
+                    <label for="editDonVi">Đơn vị:</label>
+                    <input type="text" id="editDonVi" name="donVi" required><br><br>
+
+                    <label for="editEmail">Email:</label>
+                    <input type="email" id="editEmail" name="email" required><br><br>
+
+                    <label for="editSoDienThoai">Số điện thoại:</label>
+                    <input type="tel" id="editSoDienThoai" name="soDienThoai" required><br><br>
+
+                    <button type="submit">Cập nhật</button>
+                    <button type="button" onclick="document.getElementById('editGVModal').style.display='none'">Hủy
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal thống kê -->
+        <div id="statisticModal" class="modal-overlay" style="display: none;">
+            <div class="modal-content">
+                <h3>Thống kê giảng viên theo loại</h3>
+                <canvas id="giangVienChart" width="400" height="300"></canvas>
+                <br>
+                <button onclick="closeStatisticModal()">Đóng</button>
+            </div>
+        </div>
+
+
+
     </main>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.querySelectorAll(".gv-table tbody tr").forEach(row => {
+    row.addEventListener("click", function () {
+        document.querySelectorAll(".gv-table tbody tr").forEach(r => r.classList.remove("selected"));
+        this.classList.add("selected");
+    });
+});
+    function loadGV() {
+        fetch("/admin/giangvien/list")
+            .then(res => res.json())
+            .then(giangviens => {
+                const tbody = document.querySelector(".gv-table tbody");
+                tbody.innerHTML = "";
+
+                giangviens.forEach(gv => {
+                    const row = document.createElement("tr");
+                    row.innerHTML = `
+                        <td>${gv.giangVienId}</td>
+                        <td>${gv.hoTen}</td>
+                        <td>${gv.loaiGiangVien}</td>
+                        <td>${gv.donVi}</td>
+                        <td>${gv.email}</td>
+                        <td>${gv.soDienThoai}</td>
+                        <td>
+                            <button>✏️</button>
+                            <button>🗑️</button>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            })
+            .catch(err => console.error("Không thể tải danh sách người dùng:", err));
+    }
+    function addGV() {
+        document.getElementById("addGVModal").style.display = "flex";
+    }
+    document.getElementById("addGVForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const formData = {
+            giangVienId: document.getElementById("giangVienId").value,
+            userId: document.getElementById("userId").value,
+            hoTen: document.getElementById("hoTen").value,
+            loaiGiangVien: document.getElementById("loaiGiangVien").value,
+            donVi: document.getElementById("donVi").value,
+            email: document.getElementById("email").value,
+            soDienThoai: document.getElementById("soDienThoai").value
+        };
+
+        fetch("/admin/giangvien/add", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(res => {
+            if (res.ok) {
+                alert("Thêm giảng viên thành công!");
+                document.getElementById("addGVModal").style.display = "none";
+                loadGV();
+            } else {
+                alert("Lỗi khi thêm giảng viên!");
+            }
+        })
+        .catch(err => {
+            console.error("Lỗi gửi dữ liệu:", err);
+            alert("Đã xảy ra lỗi kết nối.");
+        });
+    });
+
+    function fillEditFormFromRow(row) {
+    try {
+        const cells = row.getElementsByTagName("td");
+
+        if (cells.length < 6) {
+            alert("Dữ liệu giảng viên không đầy đủ.");
+            return;
+        }
+
+        const giangVienId = cells[0].innerText.trim();
+        const hoTen = cells[1].innerText.trim();
+        const loaiGiangVien = cells[2].innerText.trim();
+        const donVi = cells[3].innerText.trim();
+        const email = cells[4].innerText.trim();
+        const soDienThoai = cells[5].innerText.trim();
+
+        // Lấy userId từ attribute data-userid
+        const userId = row.dataset.userid;
+
+        document.getElementById("editGiangVienId").value = giangVienId;
+        document.getElementById("editHoTen").value = hoTen;
+        document.getElementById("editLoaiGiangVien").value = loaiGiangVien;
+        document.getElementById("editDonVi").value = donVi;
+        document.getElementById("editEmail").value = email;
+        document.getElementById("editSoDienThoai").value = soDienThoai;
+
+        // Set giá trị cho select userId
+        document.getElementById("editUserId").value = userId;
+
+        document.getElementById("editGVModal").style.display = "block";
+
+    } catch (e) {
+        console.error("Lỗi trong fillEditFormFromRow:", e);
+        alert("Không thể điền dữ liệu vào form giảng viên.");
+    }
+}
+
+    function editGV(button) {
+    const row = button.closest("tr");
+    fillEditFormFromRow(row);
+    document.getElementById("editGVModal").style.display = "flex";
+}
+    // Gửi form sau khi chỉnh sửa
+    document.getElementById("editGVForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const formData = new FormData(this);
+
+    const giangVien = {
+        giangVienId: formData.get("giangVienId"),
+        userId: formData.get("userId"),
+        hoTen: formData.get("hoTen"),
+        loaiGiangVien: formData.get("loaiGiangVien"),
+        donVi: formData.get("donVi"),
+        email: formData.get("email"),
+        soDienThoai: formData.get("soDienThoai")
+    };
+
+    fetch("/admin/giangvien/update", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(giangVien)
+    })
+    .then(response => {
+        if (response.ok) {
+            alert("Cập nhật giảng viên thành công!");
+            location.reload();
+        } else {
+            alert("Cập nhật thất bại!");
+        }
+    })
+    .catch(error => {
+        console.error("Lỗi khi cập nhật giảng viên:", error);
+        alert("Có lỗi xảy ra khi cập nhật!");
+    });
+});
+    function deleteGV(button) {
+        const row = button.closest("tr");
+        const giangVienId = row.getAttribute("data-id") || row.cells[0].innerText.trim();
+
+        // Xác nhận xóa người dùng
+        if (confirm(`Bạn có chắc muốn xóa giảng viên ID ${giangVienId}?`)) {
+            fetch(`/admin/giangvien/delete/${giangVienId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    alert("Xóa thành công!");
+                    location.reload();
+                } else {
+                    alert("Xóa thất bại!");
+                }
+            })
+            .catch(error => {
+                console.error("Lỗi khi xóa giảng viên:", error);
+                alert("Có lỗi xảy ra khi xóa!");
+            });
+        }
+    }
+    function handleSearch() {
+        const input = document.getElementById("searchInput").value.toLowerCase();
+        const rows = document.querySelectorAll(".gv-table tbody tr");
+
+        rows.forEach(row => {
+            const userName = row.cells[1].innerText.toLowerCase(); // Cột đầu tiên là tên người dùng
+            if (userName.includes(input)) {
+                row.style.display = ""; // Hiển thị
+            } else {
+                row.style.display = "none"; // Ẩn
+            }
+        });
+    }
+    function showThongKeGV() {
+        fetch('/admin/giangvien/thongke')
+          .then(response => response.json())
+          .then(data => {
+            const labels = data.labels;
+            const counts = data.counts;
+
+            const ctx = document.getElementById('giangVienChart').getContext('2d');
+
+            // Xóa chart cũ nếu có
+            if (window.myChart) {
+              window.myChart.destroy();
+            }
+
+            window.myChart = new Chart(ctx, {
+              type: 'bar', // có thể đổi thành 'pie', 'doughnut', ...
+              data: {
+                labels: labels,
+                datasets: [{
+                  label: 'Số lượng giảng viên',
+                  data: counts,
+                  backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                  borderColor: 'rgba(75, 192, 192, 1)',
+                  borderWidth: 1
+                }]
+              },
+              options: {
+                responsive: true,
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                    stepSize: 1
+                  }
+                }
+              }
+            });
+
+            document.getElementById('statisticModal').style.display = 'flex';
+          })
+          .catch(error => {
+            console.error('Lỗi khi lấy dữ liệu thống kê:', error);
+            alert('Không thể lấy dữ liệu thống kê!');
+          });
+    }
+
+  function closeStatisticModal() {
+    document.getElementById('statisticModal').style.display = 'none';
+  }
+
+
+</script>
 </body>
 </html>
