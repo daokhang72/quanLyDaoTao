@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Page</title>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/home.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="profile">
+                <img src="/image/user.svg" alt="Avatar">
+                <h3>Admin <span>👤</span></h3>
+            </div>
+            <nav class="menu">
+                <a data-page="home" class="active">Trang chủ</a>
+                <a>Thông tin CTĐT</a>
+                <a>Đề cương chi tiết</a>
+                <a>Kế hoạch dạy học</a>
+                <a>Phân công giảng dạy</a>
+                <a>Giảng viên</a>
+                <a>Mẫu in</a>
+                <a>Thống kê</a>
+                <a>Quản lý người dùng</a>
+            </nav>
+        </div>
+        <main class="content">
+
+        </main>
+    </div>
+    <script type="module">
+        import createHome from '/jsPage/home.js';
+        window.onload = document.querySelector('.content').innerHTML = createHome();
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const menuItems = document.querySelectorAll(".menu a");
+            const content = document.querySelector(".content");
+
+            const routes = {
+                home: createHome
+            }
+
+            menuItems.forEach((item) => {
+                item.addEventListener("click", function () {
+                    menuItems.forEach(el => el.classList.remove("active"));
+                    this.classList.add("active");
+
+                    const page = this.dataset.page;
+                    const render = routes[page];
+                    if (render) {
+                        content.innerHTML = render();
+                    } else {
+                        content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+</html>
