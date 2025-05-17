@@ -157,7 +157,7 @@
 <div class="container">
     <div class="sidebar">
         <div class="profile">
-            <img src="image/user.svg" alt="Avatar">
+            <img src="../static/image/user.svg" alt="Avatar">
             <h3>Admin <span>👤</span></h3>
         </div>
         <nav class="menu">
@@ -205,7 +205,7 @@
         </table>
     </main>
 </div>
-<script src="js/khungctJSAPI.js"></script>
+<script src="../static/jsApi/khungctJSAPI.js"></script>
 <script>
     loadCT();
 
@@ -230,8 +230,8 @@
             <td>${item.soTinChiBatBuoc}</td>
             <td>${item.soTinChiTuChon || ""}</td>
             <td style="white-space: nowrap;">
-              <img src="image/delete.svg" alt="Xóa" onclick="deleteCT('${item.khungId}')">
-              <img src="image/edit.svg" alt="Chỉnh sửa" onclick="editCT(${item.khungId}, this)">
+              <img src="../static/image/delete.svg" alt="Xóa" onclick="deleteCT('${item.khungId}')">
+              <img src="../static/image/edit.svg" alt="Chỉnh sửa" onclick="editCT(${item.khungId}, this)">
             </td>
           `;
 

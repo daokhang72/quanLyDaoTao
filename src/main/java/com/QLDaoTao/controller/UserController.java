@@ -35,7 +35,7 @@ public class UserController {
     }
     @GetMapping("/homeAdmin")
     public String showAdminHome(){
-        return "homeAdmin";
+        return "index";
     }
     @GetMapping("/CTDTAdmin")
     public String showCTDTAdmin(){
@@ -54,7 +54,7 @@ public class UserController {
             UserResponse response = userService.login(request);
 
             if (response.isAdmin()) {
-                return "homeAdmin";
+                return "index";
             } else {
                 model.addAttribute("error", "Bạn không có quyền truy cập!");
                 return "login";

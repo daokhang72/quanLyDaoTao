@@ -1,0 +1,13 @@
+.welcome {
+    font-size: 28px;
+    color: #fbbc05;
+    font-weight: bold;
+    text-shadow: 1px 1px 0 #000;
+}
+
+.sub-welcome {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #d32f2f;
+    font-weight: bold;
+}

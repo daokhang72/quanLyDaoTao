@@ -28,8 +28,8 @@ public class AdminController {
     @Autowired
     private final GiangVienRepository giangVienRepository;
 
-    @GetMapping("/home")
-    public String homeAdmin() {return "homeAdmin";}
+    @GetMapping()
+    public String homeAdmin() {return "index";}
 
     @GetMapping("/ctdt")
     public String ctdtAdmin() {return "CTDTAdmin";}
