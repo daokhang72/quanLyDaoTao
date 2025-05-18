@@ -8,25 +8,28 @@ import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class KhungChuongTrinhServicce {
     @Autowired
     final private KhungChuongTrinhRepository khungChuongTrinhRepository;
 
     public KhungChuongTrinhResponse taoKhungChuongTrinh(KhungChuongTrinhRequest request){
-        KhungChuongTrinh result =  khungChuongTrinhRepository.save(new KhungChuongTrinh(
-                request.ctdtId(),
-                request.soTinChiTuChon(),
-                request.khoiKienThuc(),
-                request.tenNhom(),
-                request.soTinChiBatBuoc(),
-                request.soTinChiTuChon()
-                ));
+
+        KhungChuongTrinh khung = new KhungChuongTrinh();
+        khung.setCtdtId(request.ctdtId());
+        khung.setKhoiKienThuc(request.khoiKienThuc());
+        khung.setTenNhom(request.tenNhom());
+        khung.setSoTinChiBatBuoc(request.soTinChiBatBuoc());
+        khung.setSoTinChiTuChon(request.soTinChiTuChon());
+
+        KhungChuongTrinh result =  khungChuongTrinhRepository.save(khung);
         return KhungChuongTrinhResponse.of(result);
     }
 

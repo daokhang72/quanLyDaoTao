@@ -6,6 +6,8 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/information.css">
+    <link rel="stylesheet" href="/css/frame.css">
 </head>
 <body>
     <div class="container">
@@ -16,7 +18,7 @@
             </div>
             <nav class="menu">
                 <a data-page="home" class="active">Trang chủ</a>
-                <a>Thông tin CTĐT</a>
+                <a data-page="information">Thông tin CTĐT</a>
                 <a>Đề cương chi tiết</a>
                 <a>Kế hoạch dạy học</a>
                 <a>Phân công giảng dạy</a>
@@ -31,15 +33,18 @@
         </main>
     </div>
     <script type="module">
-        import createHome from '/jsPage/home.js';
-        window.onload = document.querySelector('.content').innerHTML = createHome();
+        import createHome from '/jsPage/homePage.js';
+        import createInformation from '/jsPage/informationPage.js';
+
+        window.onload = createHome();
 
         document.addEventListener("DOMContentLoaded", function () {
             const menuItems = document.querySelectorAll(".menu a");
             const content = document.querySelector(".content");
 
             const routes = {
-                home: createHome
+                home: createHome,
+                information:createInformation
             }
 
             menuItems.forEach((item) => {
@@ -50,7 +55,7 @@
                     const page = this.dataset.page;
                     const render = routes[page];
                     if (render) {
-                        content.innerHTML = render();
+                        render();
                     } else {
                         content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
                     }

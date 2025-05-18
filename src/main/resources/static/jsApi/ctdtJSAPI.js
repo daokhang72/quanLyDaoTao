@@ -1,5 +1,5 @@
 const URL = 'http://localhost:8081'
-function getAllCTDT() {
+export function getAllCTDT() {
     return fetch(`${URL}/thongtin`)
         .then(response => response.json())
         .catch(error => {
@@ -7,7 +7,7 @@ function getAllCTDT() {
             throw error;
         });
 }
-function deleteCTDTByid(id) {
+export function deleteCTDTByid(id) {
     return fetch(`${URL}/thongtin/${id}`, {
         method: 'DELETE',
     })
@@ -23,7 +23,7 @@ function deleteCTDTByid(id) {
         });
 }
 
-function createCTDT(formData) {
+export function createCTDT(formData) {
     return fetch(`${URL}/thongtin`, {
         method: "POST",
         headers: {
@@ -44,7 +44,7 @@ function createCTDT(formData) {
         });
 }
 
-function updateCTDTById(id,formData) {
+export function updateCTDTById(id,formData) {
     return fetch(`${URL}/thongtin/${id}`, {
         method: "PUT",
         headers: {
@@ -64,7 +64,7 @@ function updateCTDTById(id,formData) {
             throw error;
         });
 }
-function timKiemThongTinChung(keyWord) {
+export function timKiemThongTinChung(keyWord) {
     return fetch(`${URL}/thongtin/find?keyword=${encodeURIComponent(keyWord)}`)
         .then(response => response.json())
         .catch(error => {

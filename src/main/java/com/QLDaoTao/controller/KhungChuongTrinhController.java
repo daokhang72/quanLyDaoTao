@@ -17,7 +17,7 @@ public class KhungChuongTrinhController {
     @Autowired
     final private KhungChuongTrinhServicce khungChuongTrinhServicce;
     @PostMapping
-    public ResponseEntity<KhungChuongTrinhResponse> taoKhungChuongTrinh(KhungChuongTrinhRequest request){
+    public ResponseEntity<KhungChuongTrinhResponse> taoKhungChuongTrinh(@RequestBody KhungChuongTrinhRequest request){
         return ResponseEntity.ok(khungChuongTrinhServicce.taoKhungChuongTrinh(request));
     }
 
@@ -27,12 +27,12 @@ public class KhungChuongTrinhController {
     }
 
     @PutMapping("/{khungId}")
-    public ResponseEntity<KhungChuongTrinhResponse> suaKhungChuongTrinh(Integer id, KhungChuongTrinhRequest request){
-        return ResponseEntity.ok(khungChuongTrinhServicce.suaKhungChuongTrinh(id, request));
+    public ResponseEntity<KhungChuongTrinhResponse> suaKhungChuongTrinh(@PathVariable Integer khungId,@RequestBody  KhungChuongTrinhRequest request){
+        return ResponseEntity.ok(khungChuongTrinhServicce.suaKhungChuongTrinh(khungId, request));
     }
 
     @DeleteMapping("/{khungId}")
-    public void xoaKhungChuongTrinh(Integer id){
-        khungChuongTrinhServicce.xoaKhungChuongTrinh(id);
+    public void xoaKhungChuongTrinh(@PathVariable  Integer khungId){
+        khungChuongTrinhServicce.xoaKhungChuongTrinh(khungId);
     }
 }

@@ -9,7 +9,7 @@ function getKhungByCTDTId(ctdtId) {
             throw error;
         });
 }
-function getAllKhungCT() {
+export function getAllKhungCT() {
   return fetch(`${URL}/khungchuongtrinh`)
     .then(res => {
       if (!res.ok) throw new Error('Lỗi server');
@@ -17,7 +17,7 @@ function getAllKhungCT() {
     });
 }
 // Tạo khung mới
-function createKhung(formData) {
+export function createKhung(formData) {
     return fetch(`${URL}/khungchuongtrinh`, {
         method: "POST",
         headers: {
@@ -39,12 +39,12 @@ function createKhung(formData) {
 }
 
 // Xóa khung theo ID
-function deleteKhungById(id) {
+export function deleteKhungById(id) {
     return fetch(`${URL}/khungchuongtrinh/${id}`, {
         method: 'DELETE',
     })
         .then(response => {
-            if (response.status !== 204) {
+            if (![200, 204].includes(response.status)) {
                 throw new Error('Xóa thất bại');
             }
             return { success: true };
@@ -56,7 +56,7 @@ function deleteKhungById(id) {
 }
 
 // Cập nhật khung theo ID
-function updateKhungById(id, formData) {
+export function updateKhungById(id, formData) {
     return fetch(`${URL}/khungchuongtrinh/${id}`, {
         method: "PUT",
         headers: {

@@ -31,10 +31,7 @@ public class AdminController {
     @GetMapping()
     public String homeAdmin() {return "index";}
 
-    @GetMapping("/ctdt")
-    public String ctdtAdmin() {return "CTDTAdmin";}
-
-    @GetMapping("/decuong")
+     @GetMapping("/decuong")
     public String DeCuongCTAdmin() {
         return "decuongCT";
     }
