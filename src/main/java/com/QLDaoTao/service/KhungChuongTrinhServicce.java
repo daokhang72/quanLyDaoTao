@@ -19,14 +19,15 @@ public class KhungChuongTrinhServicce {
     final private KhungChuongTrinhRepository khungChuongTrinhRepository;
 
     public KhungChuongTrinhResponse taoKhungChuongTrinh(KhungChuongTrinhRequest request){
-        KhungChuongTrinh result =  khungChuongTrinhRepository.save(new KhungChuongTrinh(
-                request.ctdtId(),
-                request.soTinChiTuChon(),
-                request.khoiKienThuc(),
-                request.tenNhom(),
-                request.soTinChiBatBuoc(),
-                request.soTinChiTuChon()
-                ));
+
+        KhungChuongTrinh khung = new KhungChuongTrinh();
+        khung.setCtdtId(request.ctdtId());
+        khung.setKhoiKienThuc(request.khoiKienThuc());
+        khung.setTenNhom(request.tenNhom());
+        khung.setSoTinChiBatBuoc(request.soTinChiBatBuoc());
+        khung.setSoTinChiTuChon(request.soTinChiTuChon());
+
+        KhungChuongTrinh result =  khungChuongTrinhRepository.save(khung);
         return KhungChuongTrinhResponse.of(result);
     }
 

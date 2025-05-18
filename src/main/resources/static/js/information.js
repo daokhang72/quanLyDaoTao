@@ -2,7 +2,7 @@ import { getAllCTDT, deleteCTDTByid,createCTDT,timKiemThongTinChung,updateCTDTBy
 import { loadKhungCTDT } from '/jsPage/framePage.js';
 
 function xemKhungCTDT(id){
-    loadKhungCTDT();
+    loadKhungCTDT(id);
 }
 
 export function loadCTDT() {

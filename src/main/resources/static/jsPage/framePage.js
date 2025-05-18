@@ -1,29 +1,65 @@
-import { loadCT} from '/js/frame.js';
+import { loadCT,addKhungCT} from '/js/frame.js';
 
-export function loadKhungCTDT() {
+export function loadKhungCTDT(id) {
     const content = document.querySelector(".content");
     if (!content) return;
 
     content.innerHTML = `
-        <h1 class="welcome">KHUNG CHƯƠNG TRÌNH ĐÀO TẠO</h1>
-        <table class="frameTable">
-            <thead>
-                <tr>
-                    <th rowspan="2">Các khối kiến thức</th>
-                    <th colspan="2">Số tín chỉ</th>
-                     <th rowspan="2">Tác Vụ</th>
-                </tr>
-                <tr>
-                    <th>Bắt buộc</th>
-                    <th>Tự chọn</th>
-                    
-                </tr>
-            </thead>
-            <tbody>
-                
-            </tbody>
-        </table>
+        <div class="tab-container">
+            <div class="tab-header"> 
+                <button class="tab-btn active" data-tab="ctdt">Khung Chương Trình</button>
+                <button class="tab-btn" data-tab="another">Học Phần</button>
+            </div>
+            <div class="tab-content">
+                <div id="ctdt" class="tab-panel active">
+                    <h1 class="welcome">KHUNG CHƯƠNG TRÌNH ĐÀO TẠO</h1>
+                     <div class="top-bar">
+             
+                        <div class="add-button-container">
+                            <button class="add-button">Thêm Khung</button>
+                        </div>
+                    </div>
+                    <table class="frameTable">
+                        <thead>
+                            <tr>
+                                <th rowspan="2">Các khối kiến thức</th>
+                                <th colspan="2">Số tín chỉ</th>
+                                <th rowspan="2">Tác Vụ</th>
+                            </tr>
+                            <tr>
+                                <th>Bắt buộc</th>
+                                <th>Tự chọn</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     `;
+    window.onload = loadCT();
 
-    loadCT();
+
+    const tabButtons = content.querySelectorAll(".tab-btn");
+    const tabPanels = content.querySelectorAll(".tab-panel");
+    const addButton = content.querySelector('.add-button');
+
+    tabButtons.forEach(button => {
+        button.addEventListener("click", () => {
+            const target = button.dataset.tab;
+
+            tabButtons.forEach(btn => btn.classList.remove("active"));
+            button.classList.add("active");
+
+            tabPanels.forEach(panel => {
+                panel.classList.toggle("active", panel.id === target);
+            });
+        });
+    });
+
+    if (addButton) {
+        addButton.addEventListener('click', function () {
+            addKhungCT(id);
+        });
+    }
 }

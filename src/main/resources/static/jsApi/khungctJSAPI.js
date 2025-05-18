@@ -17,7 +17,7 @@ export function getAllKhungCT() {
     });
 }
 // Tạo khung mới
-function createKhung(formData) {
+export function createKhung(formData) {
     return fetch(`${URL}/khungchuongtrinh`, {
         method: "POST",
         headers: {

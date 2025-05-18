@@ -17,7 +17,7 @@ public class KhungChuongTrinhController {
     @Autowired
     final private KhungChuongTrinhServicce khungChuongTrinhServicce;
     @PostMapping
-    public ResponseEntity<KhungChuongTrinhResponse> taoKhungChuongTrinh(KhungChuongTrinhRequest request){
+    public ResponseEntity<KhungChuongTrinhResponse> taoKhungChuongTrinh(@RequestBody KhungChuongTrinhRequest request){
         return ResponseEntity.ok(khungChuongTrinhServicce.taoKhungChuongTrinh(request));
     }
 
