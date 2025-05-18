@@ -39,12 +39,12 @@ export function createKhung(formData) {
 }
 
 // Xóa khung theo ID
-function deleteKhungById(id) {
+export function deleteKhungById(id) {
     return fetch(`${URL}/khungchuongtrinh/${id}`, {
         method: 'DELETE',
     })
         .then(response => {
-            if (response.status !== 204) {
+            if (![200, 204].includes(response.status)) {
                 throw new Error('Xóa thất bại');
             }
             return { success: true };

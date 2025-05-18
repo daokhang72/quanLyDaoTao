@@ -1,4 +1,4 @@
-import { getAllKhungCT,createKhung} from '/jsApi/khungctJSAPI.js';
+import { getAllKhungCT,createKhung,deleteKhungById} from '/jsApi/khungctJSAPI.js';
 
 export function loadCT() {
     getAllKhungCT().then(data => {
@@ -23,9 +23,7 @@ export function loadCT() {
                 <td><strong>${khoiKienThuc}</strong></td>
                 <td><strong>${totalBatBuoc}</strong></td>
                 <td><strong>${totalTuChon}</strong></td>
-                <td>
-<!--                    <button class="button-frame"  onclick="xoatoanbokhung()">Xóa Khối</button>-->
-                </td>
+                <td></td>
             `;
             tbody.appendChild(parentRow);
 
@@ -36,13 +34,32 @@ export function loadCT() {
                     <td>${item.soTinChiBatBuoc}</td>
                     <td>${item.soTinChiTuChon}</td>
                     <td>
-                        <button class="button-frame" onclick="suaKhung(${item.khungId})">Sửa</button>
-                        <button class="button-frame"  onclick="suaKhung(${item.khungId})">Xóa</button>
+                        <button class="button-frame edit-btn">Sửa</button>
+                        <button class="button-frame delete-btn">Xóa</button>
                     </td>
                 `;
+
+                row.dataset.khungId = item.khungId;
+
                 tbody.appendChild(row);
             });
         }
+
+        tbody.querySelectorAll('.edit-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                const khungId = row.dataset.khungId;
+                editKhungCT(khungId);
+            });
+        });
+
+        tbody.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const row = e.target.closest('tr');
+                const khungId = row.dataset.khungId;
+                deleteKhungCT(khungId);
+            });
+        });
 
     }).catch(error => {
         console.error('Lỗi khi tải dữ liệu CT:', error);
@@ -187,4 +204,74 @@ function showBottomNotification(message, isSuccess) {
             });
         });
     }, 3000);
+}
+
+function deleteKhungCT(id) {
+    const overlay = document.createElement('div');
+    overlay.style.position = 'fixed';
+    overlay.style.top = '0';
+    overlay.style.left = '0';
+    overlay.style.width = '100%';
+    overlay.style.height = '100%';
+    overlay.style.background = 'rgba(0, 0, 0, 0.5)';
+    overlay.style.display = 'flex';
+    overlay.style.justifyContent = 'center';
+    overlay.style.alignItems = 'center';
+    overlay.style.zIndex = '9999';
+
+    const modal = document.createElement('div');
+    modal.style.background = 'white';
+    modal.style.padding = '20px';
+    modal.style.borderRadius = '8px';
+    modal.style.textAlign = 'center';
+    modal.innerHTML = `
+<p style="margin-bottom: 20px;">Bạn có chắc muốn xóa Khung CT này?</p>
+<button id="confirm-btn">Xóa</button>
+<button id="cancel-btn">Hủy</button>
+`;
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    const confirmBtn = modal.querySelector('#confirm-btn');
+    const cancelBtn = modal.querySelector('#cancel-btn');
+
+    [confirmBtn, cancelBtn].forEach(btn => {
+        btn.style.padding = '10px 20px';
+        btn.style.margin = '0 10px';
+        btn.style.border = 'none';
+        btn.style.borderRadius = '4px';
+        btn.style.cursor = 'pointer';
+        btn.style.fontSize = '14px';
+        btn.style.transition = 'background-color 0.3s ease';
+    });
+
+    confirmBtn.style.backgroundColor = '#f44336';
+    confirmBtn.style.color = 'white';
+
+    cancelBtn.style.backgroundColor = '#e0e0e0';
+    cancelBtn.style.color = '#333';
+
+    confirmBtn.onmouseenter = () => confirmBtn.style.backgroundColor = '#d32f2f';
+    confirmBtn.onmouseleave = () => confirmBtn.style.backgroundColor = '#f44336';
+
+    cancelBtn.onmouseenter = () => cancelBtn.style.backgroundColor = '#ccc';
+    cancelBtn.onmouseleave = () => cancelBtn.style.backgroundColor = '#e0e0e0';
+
+    confirmBtn.onclick = () => {
+        deleteKhungById(id)
+            .then(data => {
+                loadCT();
+            })
+            .catch(err => {
+                showBottomNotification('Xóa thất bại!', false);
+                console.log(1)
+            });
+        document.body.removeChild(overlay);
+    };
+
+    cancelBtn.onclick = () => {
+        document.body.removeChild(overlay);
+    };
+
 }

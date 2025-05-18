@@ -32,7 +32,7 @@ public class KhungChuongTrinhController {
     }
 
     @DeleteMapping("/{khungId}")
-    public void xoaKhungChuongTrinh(Integer id){
-        khungChuongTrinhServicce.xoaKhungChuongTrinh(id);
+    public void xoaKhungChuongTrinh(@PathVariable  Integer khungId){
+        khungChuongTrinhServicce.xoaKhungChuongTrinh(khungId);
     }
 }
