@@ -37,11 +37,7 @@ public class UserController {
     public String showAdminHome(){
         return "index";
     }
-    @GetMapping("/CTDTAdmin")
-    public String showCTDTAdmin(){
-        return "CTDTAdmin";
-    }
-    @PostMapping("/register")
+       @PostMapping("/register")
     public ResponseEntity<UserResponse> register(@RequestBody UserRequest request) {
         return ResponseEntity.ok(userService.register(request));
     }

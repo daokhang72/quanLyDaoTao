@@ -6,6 +6,8 @@
     <title>Admin Page</title>
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/home.css">
+    <link rel="stylesheet" href="/css/information.css">
+
 </head>
 <body>
     <div class="container">
@@ -16,7 +18,7 @@
             </div>
             <nav class="menu">
                 <a data-page="home" class="active">Trang chủ</a>
-                <a>Thông tin CTĐT</a>
+                <a data-page="information">Thông tin CTĐT</a>
                 <a>Đề cương chi tiết</a>
                 <a>Kế hoạch dạy học</a>
                 <a>Phân công giảng dạy</a>
@@ -31,7 +33,10 @@
         </main>
     </div>
     <script type="module">
-        import createHome from '/jsPage/home.js';
+        import createHome from '/jsPage/homePage.js';
+        import createInformation from '/jsPage/informationPage.js';
+        import { loadCTDT,handleSearch,addCTDT } from '/js/information.js';
+
         window.onload = document.querySelector('.content').innerHTML = createHome();
 
         document.addEventListener("DOMContentLoaded", function () {
@@ -39,7 +44,8 @@
             const content = document.querySelector(".content");
 
             const routes = {
-                home: createHome
+                home: createHome,
+                information:createInformation
             }
 
             menuItems.forEach((item) => {
@@ -51,6 +57,13 @@
                     const render = routes[page];
                     if (render) {
                         content.innerHTML = render();
+
+                        // add JS page
+                        if (page === "information") {
+                            loadCTDT();
+                            document.querySelector('.search-button').addEventListener('click', handleSearch);
+                            document.querySelector('.add-button').addEventListener('click', addCTDT);
+                        }
                     } else {
                         content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
                     }
