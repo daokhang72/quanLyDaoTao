@@ -79,4 +79,11 @@ public class HocPhanservice {
     }
 
 
+    public List<HocPhanResponse> getKhungByCTDT(Integer ctdtId) {
+        List<HocPhan> results =  hocPhanRepository.findHocPhansByCtdtId(ctdtId);
+        List<HocPhanResponse> dtos = results.stream()
+                .map(HocPhanResponse::of)
+                .collect(Collectors.toList());
+        return dtos;
+    }
 }

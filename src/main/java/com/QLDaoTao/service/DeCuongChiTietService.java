@@ -2,8 +2,12 @@ package com.QLDaoTao.service;
 
 import com.QLDaoTao.dto.request.DeCuongChiTietRequest;
 import com.QLDaoTao.dto.response.DeCuongChiTietResponse;
+import com.QLDaoTao.exception.CustomException;
+import com.QLDaoTao.exception.ErrorCode;
 import com.QLDaoTao.model.DeCuongChiTiet;
+import com.QLDaoTao.model.HocPhan;
 import com.QLDaoTao.repository.DeCuongChiTietRepository;
+import com.QLDaoTao.repository.HocPhanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,10 +19,13 @@ import java.util.stream.Collectors;
 public class DeCuongChiTietService{
 
     private final DeCuongChiTietRepository repository;
-
+    private final HocPhanRepository hocPhanRepository;
     public DeCuongChiTietResponse taoDeCuong(DeCuongChiTietRequest request) {
+        HocPhan hocPhan = hocPhanRepository.findById(request.maHp())
+                .orElseThrow(() -> new CustomException(ErrorCode.HocPhan_NOT_FOUND));
+
         DeCuongChiTiet entity = new DeCuongChiTiet();
-        entity.setMaHp(request.maHp());
+//        entity.setMaHp(hocPhan);
         entity.setTenBoPhan(request.tenBoPhan());
         entity.setDiemDanhGia(request.diemDanhGia());
         entity.setTrongSo(request.trongSo());
@@ -37,7 +44,7 @@ public class DeCuongChiTietService{
         DeCuongChiTiet entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đề cương với id = " + id));
 
-        entity.setMaHp(request.maHp());
+//        entity.setMaHp(request.maHp());
         entity.setTenBoPhan(request.tenBoPhan());
         entity.setDiemDanhGia(request.diemDanhGia());
         entity.setTrongSo(request.trongSo());

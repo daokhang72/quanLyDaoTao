@@ -1,6 +1,7 @@
 import { loadCT,addKhungCT} from '/js/frame.js';
+import { loadHP} from '/js/study.js';
 
-export function loadKhungCTDT(id) {
+export function DetailCTDT(id) {
     const content = document.querySelector(".content");
     if (!content) return;
 
@@ -34,11 +35,30 @@ export function loadKhungCTDT(id) {
                         <tbody></tbody>
                     </table>
                 </div>
+                <div id="another" class="tab-panel">
+                    <h1 class="welcome">HỌC PHẦN</h1>
+                    <table class="study">
+                        <thead>
+                            <tr>
+                                <th>Tên Học Phần</th>
+                                <th>Số Tín Chỉ</th>
+                                <th>Lý Thuyết</th>
+                                <th>Thực Hành</th>
+                                <th>Thực Tập</th>
+                                <th>Hệ Số</th>
+                            </tr>
+                            <tr>
+                         
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
-    window.onload = loadCT();
-
+    window.onload = loadCT(id);
+    window.onload = loadHP(id);
 
     const tabButtons = content.querySelectorAll(".tab-btn");
     const tabPanels = content.querySelectorAll(".tab-panel");

@@ -21,4 +21,7 @@ public interface HocPhanRepository extends JpaRepository<HocPhan, Integer> {
             @Param("heSoHocPhan") Integer heSoHocPhan
     );
 
+    @Query("SELECT hp FROM HocPhan hp JOIN KhungChuongTrinh k ON hp.khungId = k.khungId WHERE k.ctdt = :ctdtId")
+    List<HocPhan> findHocPhansByCtdtId(@Param("ctdtId") Integer ctdtId);
+
 }

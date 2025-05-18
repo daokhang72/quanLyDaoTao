@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -15,7 +17,7 @@ import lombok.Setter;
 public class ThongTinChung {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int ctdtId;
+	private Integer ctdtId;
 	
     private String tenCtdt;
 
@@ -25,9 +27,9 @@ public class ThongTinChung {
 
     private String loaiHinhDaoTao;
 
-    private float thoiGian;
+    private Float thoiGian;
 
-    private int soTinChi;
+    private Integer soTinChi;
 
     private String khoaQuanLy;
 
@@ -37,6 +39,7 @@ public class ThongTinChung {
 
     private String banHanh;
 
-
+    @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<KhungChuongTrinh> danhSachKhung;
     
 }

@@ -23,7 +23,7 @@ public class KhungChuongTrinhServicce {
     public KhungChuongTrinhResponse taoKhungChuongTrinh(KhungChuongTrinhRequest request){
 
         KhungChuongTrinh khung = new KhungChuongTrinh();
-        khung.setCtdtId(request.ctdtId());
+        khung.setCtdt(request.ctdtId());
         khung.setKhoiKienThuc(request.khoiKienThuc());
         khung.setTenNhom(request.tenNhom());
         khung.setSoTinChiBatBuoc(request.soTinChiBatBuoc());
@@ -45,9 +45,7 @@ public class KhungChuongTrinhServicce {
         KhungChuongTrinh entity = khungChuongTrinhRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Không tìm thấy KhungChuongTrinh với ID: " + id));
 
-        entity.setKhungId(request.ctdtId());
         entity.setTenNhom(request.tenNhom());
-        entity.setCtdtId(request.ctdtId());
         entity.setKhoiKienThuc(request.khoiKienThuc());
         entity.setSoTinChiTuChon(request.soTinChiTuChon());
         entity.setSoTinChiBatBuoc(request.soTinChiBatBuoc());
@@ -62,4 +60,11 @@ public class KhungChuongTrinhServicce {
         khungChuongTrinhRepository.deleteById(id);
     }
 
+    public List<KhungChuongTrinhResponse> getKhungByCTDT(Integer ctdtId) {
+        List<KhungChuongTrinh> results =  khungChuongTrinhRepository.findByCtdt_CtdtId(ctdtId);
+        List<KhungChuongTrinhResponse> dtos = results.stream()
+                .map(KhungChuongTrinhResponse::of)
+                .collect(Collectors.toList());
+        return dtos;
+    }
 }

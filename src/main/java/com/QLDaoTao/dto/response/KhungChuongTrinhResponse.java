@@ -1,11 +1,12 @@
 package com.QLDaoTao.dto.response;
 
 import com.QLDaoTao.model.KhungChuongTrinh;
+import com.QLDaoTao.model.ThongTinChung;
 
 public record KhungChuongTrinhResponse(
         int khungId,
 
-        int ctdtId,
+        ThongTinChung ctdtId,
 
         String khoiKienThuc,
 
@@ -18,7 +19,7 @@ public record KhungChuongTrinhResponse(
     public static KhungChuongTrinhResponse of(KhungChuongTrinh khungChuongTrinh) {
         return new KhungChuongTrinhResponse(
                 khungChuongTrinh.getKhungId(),
-                khungChuongTrinh.getCtdtId(),
+                khungChuongTrinh.getCtdt(),
                 khungChuongTrinh.getKhoiKienThuc(),
                 khungChuongTrinh.getTenNhom(),
                 khungChuongTrinh.getSoTinChiBatBuoc(),

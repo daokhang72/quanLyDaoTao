@@ -36,10 +36,6 @@ public class AdminController {
         return "decuongCT";
     }
 
-    @GetMapping("/khung")
-    public String khungCTAdmin() {
-        return "KhungCTAdmin";
-    }
 
     @GetMapping("/hocphan")
     public String dsHPAdmin() {

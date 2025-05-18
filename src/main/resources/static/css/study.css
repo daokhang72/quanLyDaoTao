@@ -1,0 +1,20 @@
+.study {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fdf2b2;
+}
+
+.study th,
+.study td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+.study thead{
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.study td{
+    height: 30px;
+}
