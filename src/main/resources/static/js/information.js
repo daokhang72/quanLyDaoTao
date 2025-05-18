@@ -1,4 +1,9 @@
 import { getAllCTDT, deleteCTDTByid,createCTDT,timKiemThongTinChung,updateCTDTById } from '/jsApi/ctdtJSAPI.js';
+import { loadKhungCTDT } from '/jsPage/framePage.js';
+
+function xemKhungCTDT(id){
+    loadKhungCTDT();
+}
 
 export function loadCTDT() {
     getAllCTDT().then(data => {
@@ -85,9 +90,7 @@ function showTable(data){
 }
 
 
-function xemKhungCTDT(id){
 
-}
 function deleteCTDT(id) {
     const overlay = document.createElement('div');
     overlay.style.position = 'fixed';

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="/css/index.css">
     <link rel="stylesheet" href="/css/home.css">
     <link rel="stylesheet" href="/css/information.css">
-
+    <link rel="stylesheet" href="/css/frame.css">
 </head>
 <body>
     <div class="container">
@@ -35,9 +35,8 @@
     <script type="module">
         import createHome from '/jsPage/homePage.js';
         import createInformation from '/jsPage/informationPage.js';
-        import { loadCTDT,handleSearch,addCTDT } from '/js/information.js';
 
-        window.onload = document.querySelector('.content').innerHTML = createHome();
+        window.onload = createHome();
 
         document.addEventListener("DOMContentLoaded", function () {
             const menuItems = document.querySelectorAll(".menu a");
@@ -56,14 +55,7 @@
                     const page = this.dataset.page;
                     const render = routes[page];
                     if (render) {
-                        content.innerHTML = render();
-
-                        // add JS page
-                        if (page === "information") {
-                            loadCTDT();
-                            document.querySelector('.search-button').addEventListener('click', handleSearch);
-                            document.querySelector('.add-button').addEventListener('click', addCTDT);
-                        }
+                        render();
                     } else {
                         content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
                     }

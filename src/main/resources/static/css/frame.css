@@ -1,0 +1,29 @@
+.frameTable {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fdf2b2;
+}
+
+.frameTable th,
+.frameTable td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+.frameTable thead{
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.frameTable td{
+    height: 30px;
+}
+.button-frame{
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+}

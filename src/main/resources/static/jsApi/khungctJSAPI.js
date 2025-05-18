@@ -9,7 +9,7 @@ function getKhungByCTDTId(ctdtId) {
             throw error;
         });
 }
-function getAllKhungCT() {
+export function getAllKhungCT() {
   return fetch(`${URL}/khungchuongtrinh`)
     .then(res => {
       if (!res.ok) throw new Error('Lỗi server');
