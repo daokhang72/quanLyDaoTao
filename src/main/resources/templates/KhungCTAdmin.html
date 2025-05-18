@@ -350,18 +350,18 @@
     }, 3000);
   }
     function editKhungCT(id,button) {
-    const row = button.closest('tr');
+        const row = button.closest('tr');
 
-    const data = {
-      khungId: id,
-      khoiKienThuc: row.dataset.khoiKienThuc,
-      tenNhom: row.dataset.tenNhom,
-      soTinChiBatBuoc: row.dataset.soTinChiBatBuoc,
-      soTinChiTuChon: row.dataset.soTinChiTuChon,
-    };
+        const data = {
+          khungId: id,
+          khoiKienThuc: row.dataset.khoiKienThuc,
+          tenNhom: row.dataset.tenNhom,
+          soTinChiBatBuoc: row.dataset.soTinChiBatBuoc,
+          soTinChiTuChon: row.dataset.soTinChiTuChon,
+        };
 
-    createFormEditPortal(data);
-  }
+        createFormEditPortal(data);
+    }
     function createFormEditPortal(data) {
       createFormPortal('Chỉnh Sửa Khung Chương Trình', data, (id,formData) => {
         return updateKhungById(id, formData)

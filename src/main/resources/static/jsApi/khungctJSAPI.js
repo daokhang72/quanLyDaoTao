@@ -56,7 +56,7 @@ export function deleteKhungById(id) {
 }
 
 // Cập nhật khung theo ID
-function updateKhungById(id, formData) {
+export function updateKhungById(id, formData) {
     return fetch(`${URL}/khungchuongtrinh/${id}`, {
         method: "PUT",
         headers: {

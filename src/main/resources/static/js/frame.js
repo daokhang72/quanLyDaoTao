@@ -1,4 +1,4 @@
-import { getAllKhungCT,createKhung,deleteKhungById} from '/jsApi/khungctJSAPI.js';
+import { getAllKhungCT,createKhung,deleteKhungById,updateKhungById} from '/jsApi/khungctJSAPI.js';
 
 export function loadCT() {
     getAllKhungCT().then(data => {
@@ -40,16 +40,20 @@ export function loadCT() {
                 `;
 
                 row.dataset.khungId = item.khungId;
+                row.dataset.khoiKienThuc = khoiKienThuc;
+                row.dataset.tenNhom = item.tenNhom;
+                row.dataset.soTinChiBatBuoc = item.soTinChiBatBuoc;
+                row.dataset.soTinChiTuChon = item.soTinChiTuChon;
 
                 tbody.appendChild(row);
             });
         }
 
         tbody.querySelectorAll('.edit-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                const row = e.target.closest('tr');
+            btn.addEventListener('click', function () {
+                const row = this.closest('tr');
                 const khungId = row.dataset.khungId;
-                editKhungCT(khungId);
+                editKhungCT(khungId, this);
             });
         });
 
@@ -101,6 +105,7 @@ function createFormPortal(title, initialData, onSubmit) {
     `;
 
     const fields = [
+        { name: 'khungId', label: 'khungId', type: 'hidden' },
         { name: 'ctdtId', label: 'CTĐT ID', type: 'hidden' },
         { name: 'khoiKienThuc', label: 'Khối kiến thức' },
         { name: 'tenNhom', label: 'Tên nhóm' },
@@ -161,6 +166,9 @@ function createFormPortal(title, initialData, onSubmit) {
 
             if (initialData?.ctdtId !== undefined) {
                 formData.ctdtId = initialData.ctdtId;
+            }
+            if (initialData?.khungId !== undefined) {
+                formData.khungId = initialData.khungId;
             }
         });
         onSubmit(formData);
@@ -265,7 +273,6 @@ function deleteKhungCT(id) {
             })
             .catch(err => {
                 showBottomNotification('Xóa thất bại!', false);
-                console.log(1)
             });
         document.body.removeChild(overlay);
     };
@@ -274,4 +281,35 @@ function deleteKhungCT(id) {
         document.body.removeChild(overlay);
     };
 
+}
+
+function editKhungCT(id,button) {
+    const row = button.closest('tr');
+    const data = {
+        ctdtId: id,
+        khungId: row.dataset.khungId,
+        khoiKienThuc: row.dataset.khoiKienThuc,
+        tenNhom: row.dataset.tenNhom,
+        soTinChiBatBuoc: row.dataset.soTinChiBatBuoc,
+        soTinChiTuChon: row.dataset.soTinChiTuChon,
+    };
+
+    createFormEditPortal(data);
+}
+function createFormEditPortal(data) {
+    createFormPortal('Chỉnh Sửa Khung Chương Trình', data, (formData) => {
+        const { ctdtId, ...body } = data;
+        return updateKhungById(data.khungId, formData)
+            .then((response) => {
+                if(response.status==200){
+                    showBottomNotification("Sửa thành công!", true);
+                    loadCT();
+                }else{
+                    showBottomNotification(response.data.data.message, false);
+                }
+            })
+            .catch(() => {
+                showBottomNotification("Sửa thất bại!", false);
+            });
+    });
 }
