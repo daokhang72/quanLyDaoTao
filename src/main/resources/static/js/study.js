@@ -1,4 +1,4 @@
-import {getHocPhanByCtdt,searchHocPhan,createHocPhan,updateHocPhanById} from '/jsApi/hocPhanJSAPI.js';
+import {getHocPhanByCtdt,searchHocPhan,createHocPhan,updateHocPhanById,deleteHocPhanById} from '/jsApi/hocPhanJSAPI.js';
 import { getKhungByCTDTId} from '/jsApi/khungctJSAPI.js';
 
 export function loadHP(id) {
@@ -60,8 +60,9 @@ export function loadHP(id) {
             tbody.querySelectorAll('.delete-btn').forEach(btn => {
                 btn.addEventListener('click', (e) => {
                     const row = e.target.closest('tr');
-                    const khungId = row.dataset.khungId;
-                    deleteKhungCT(khungId);
+                    const data = JSON.parse(row.dataset.data);
+                    deleteKhungCT(data.maHp,id);
+
                 });
             });
         })
@@ -385,4 +386,15 @@ export async function editHocPhan(hocPhan, ctdtId) {
 
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
+}
+
+export async function deleteKhungCT(hocPhanId, ctdtId) {
+    try {
+
+        await deleteHocPhanById(hocPhanId);
+
+        await loadHP(ctdtId);
+    } catch (error) {
+        alert("Xóa học phần thất bại: " + error.message);
+    }
 }

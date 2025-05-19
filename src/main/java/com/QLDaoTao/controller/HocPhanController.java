@@ -35,8 +35,8 @@ public class HocPhanController {
     }
 
     @DeleteMapping("/{hocPhanId}")
-    public void xoaHocPhan(@PathVariable Integer id){
-        hocPhanservice.xoaHocPhan(id);
+    public void xoaHocPhan(@PathVariable Integer hocPhanId){
+        hocPhanservice.xoaHocPhan(hocPhanId);
     }
     @GetMapping("/searchAdvanced")
     public ResponseEntity<List<HocPhanResponse>> filterHocPhan(@RequestParam String keyword) {

@@ -53,20 +53,11 @@ export function updateHocPhanById(id, data) {
 }
 
 // Xoá học phần theo ID
-export function deleteHocPhanById(id) {
-    return fetch(`${BASE_URL}/${id}`, {
+export async function deleteHocPhanById(id) {
+    await fetch(`${BASE_URL}/${id}`, {
         method: 'DELETE'
     })
-        .then(res => {
-            if (res.status !== 204) {
-                throw new Error('Xóa thất bại');
-            }
-            return { success: true };
-        })
-        .catch(err => {
-            console.error('Lỗi:', err);
-            throw err;
-        });
+    return
 }
 
 // Tìm kiếm nâng cao học phần
