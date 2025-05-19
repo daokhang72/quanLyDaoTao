@@ -9,62 +9,64 @@
     <link rel="stylesheet" href="/css/information.css">
     <link rel="stylesheet" href="/css/frame.css">
     <link rel="stylesheet" href="/css/study.css">
-
+    <link rel="stylesheet" href="/css/user.css">
 </head>
 <body>
-    <div class="container">
-        <div class="sidebar">
-            <div class="profile">
-                <img src="/image/user.svg" alt="Avatar">
-                <h3>Admin <span>👤</span></h3>
-            </div>
-            <nav class="menu">
-                <a data-page="home" class="active">Trang chủ</a>
-                <a data-page="information">Thông tin CTĐT</a>
-                <a>Đề cương chi tiết</a>
-                <a>Kế hoạch dạy học</a>
-                <a>Phân công giảng dạy</a>
-                <a>Giảng viên</a>
-                <a>Mẫu in</a>
-                <a>Thống kê</a>
-                <a>Quản lý người dùng</a>
-            </nav>
+<div class="container">
+    <div class="sidebar">
+        <div class="profile">
+            <img src="/image/user.svg" alt="Avatar">
+            <h3>Admin <span>👤</span></h3>
         </div>
-        <main class="content">
-
-        </main>
+        <nav class="menu">
+            <a data-page="home" class="active">Trang chủ</a>
+            <a data-page="information">Thông tin CTĐT</a>
+            <a>Đề cương chi tiết</a>
+            <a>Kế hoạch dạy học</a>
+            <a>Phân công giảng dạy</a>
+            <a>Giảng viên</a>
+            <a>Mẫu in</a>
+            <a>Thống kê</a>
+            <a data-page="user">Quản lý người dùng</a>
+        </nav>
     </div>
-    <script type="module">
-        import createHome from '/jsPage/homePage.js';
-        import createInformation from '/jsPage/informationPage.js';
+    <main class="content">
 
-        window.onload = createHome();
+    </main>
+</div>
+<script type="module">
+    import createHome from '/jsPage/homePage.js';
+    import createInformation from '/jsPage/informationPage.js';
+    import createUser from '/jsPage/userPage.js';
 
-        document.addEventListener("DOMContentLoaded", function () {
-            const menuItems = document.querySelectorAll(".menu a");
-            const content = document.querySelector(".content");
+    window.onload = createHome;
 
-            const routes = {
-                home: createHome,
-                information:createInformation
-            }
+    document.addEventListener("DOMContentLoaded", function () {
+        const menuItems = document.querySelectorAll(".menu a");
+        const content = document.querySelector(".content");
 
-            menuItems.forEach((item) => {
-                item.addEventListener("click", function () {
-                    menuItems.forEach(el => el.classList.remove("active"));
-                    this.classList.add("active");
+        const routes = {
+            home: createHome,
+            information:createInformation,
+            user: createUser
+        }
 
-                    const page = this.dataset.page;
-                    const render = routes[page];
-                    if (render) {
-                        render();
-                    } else {
-                        content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
-                    }
-                });
+        menuItems.forEach((item) => {
+            item.addEventListener("click", function () {
+                menuItems.forEach(el => el.classList.remove("active"));
+                this.classList.add("active");
+
+                const page = this.dataset.page;
+                const render = routes[page];
+                if (render) {
+                    render();
+                } else {
+                    content.innerHTML = `<h1>Chưa có nội dung cho "${page}"</h1>`;
+                }
             });
         });
+    });
 
-    </script>
+</script>
 </body>
 </html>
