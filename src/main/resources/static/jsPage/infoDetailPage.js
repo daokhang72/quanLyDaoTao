@@ -102,6 +102,6 @@ export function DetailCTDT(id) {
     }
 
     if (addButtonHP) {
-        addButtonHP.addEventListener('click', addhStudy);
+        addButtonHP.addEventListener('click', () => addhStudy(id) );
     }
 }
