@@ -30,8 +30,8 @@ public class HocPhanController {
         return ResponseEntity.ok(hocPhanservice.getKhungByCTDT(ctdtId));
     }
     @PutMapping("/{hocPhanId}")
-    public ResponseEntity<HocPhanResponse> suaHocPhan(@PathVariable  Integer id, @RequestBody @Valid HocPhanRequest request){
-        return ResponseEntity.ok(hocPhanservice.suaHocPhan(id, request));
+    public ResponseEntity<HocPhanResponse> suaHocPhan(@PathVariable  Integer hocPhanId, @RequestBody @Valid HocPhanRequest request){
+        return ResponseEntity.ok(hocPhanservice.suaHocPhan(hocPhanId, request));
     }
 
     @DeleteMapping("/{hocPhanId}")
