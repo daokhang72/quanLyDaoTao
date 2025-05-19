@@ -15,12 +15,16 @@ import lombok.Setter;
 public class DeCuongChiTiet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int deCuongId;
+	private Long deCuongId;
 	
-    private int maHp;
+    private Long maHp;
+
     private String tenBoPhan;
+
     private String diemDanhGia;
+
     private Float trongSo;
+
     private String hinhThucDanhGia;
 }
 	

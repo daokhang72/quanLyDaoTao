@@ -15,20 +15,20 @@ import lombok.Setter;
 public class HocPhan {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int maHp;
+	private Integer maHp;
 	
-    private int khungId;
+    private Integer khungId;
 
     private String tenHocPhan;
 
-    private int soTinChi;
+    private Integer soTinChi;
 
-    private int soTietLyThuyet;
+    private Integer soTietLyThuyet;
 
-    private int soTietThucHanh;
+    private Integer soTietThucHanh;
 
-    private int soTietThucTap;
+    private Integer soTietThucTap;
 
-    private int heSoHocPhan;
+    private Integer heSoHocPhan;
 
 }

@@ -1,7 +1,7 @@
 const URL = 'http://localhost:8081';
 
 // Lấy tất cả các khung của một CTĐT (theo id CTĐT)
-function getKhungByCTDTId(ctdtId) {
+export function getKhungByCTDTId(ctdtId) {
     return fetch(`${URL}/khungchuongtrinh/${ctdtId}`)
         .then(response => response.json())
         .catch(error => {
@@ -9,7 +9,7 @@ function getKhungByCTDTId(ctdtId) {
             throw error;
         });
 }
-export function getAllKhungCT() {
+function getAllKhungCT() {
   return fetch(`${URL}/khungchuongtrinh`)
     .then(res => {
       if (!res.ok) throw new Error('Lỗi server');

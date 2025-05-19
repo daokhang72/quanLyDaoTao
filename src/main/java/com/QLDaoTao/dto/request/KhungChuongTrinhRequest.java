@@ -1,7 +1,9 @@
 package com.QLDaoTao.dto.request;
 
+import com.QLDaoTao.model.ThongTinChung;
+
 public record KhungChuongTrinhRequest(
-        int ctdtId,
+        Integer ctdtId,
 
         String khoiKienThuc,
 

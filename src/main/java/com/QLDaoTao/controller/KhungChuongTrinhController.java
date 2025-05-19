@@ -20,7 +20,10 @@ public class KhungChuongTrinhController {
     public ResponseEntity<KhungChuongTrinhResponse> taoKhungChuongTrinh(@RequestBody KhungChuongTrinhRequest request){
         return ResponseEntity.ok(khungChuongTrinhServicce.taoKhungChuongTrinh(request));
     }
-
+    @GetMapping("/{ctdtId}")
+    public ResponseEntity<List<KhungChuongTrinhResponse>> getByCTDT(@PathVariable Integer ctdtId) {
+        return ResponseEntity.ok(khungChuongTrinhServicce.getKhungByCTDT(ctdtId));
+    }
     @GetMapping()
     public ResponseEntity<List<KhungChuongTrinhResponse>> layToanBoKhungChuongTrinh(){
         return ResponseEntity.ok(khungChuongTrinhServicce.layToanBoKhungChuongTrinh());

@@ -3,8 +3,8 @@ package com.QLDaoTao.dto.response;
 import com.QLDaoTao.model.DeCuongChiTiet;
 
 public record DeCuongChiTietResponse(
-        int deCuongId,
-        int maHp,
+        Long deCuongId,
+        Long maHp,
         String tenBoPhan,
         String diemDanhGia,
         Float trongSo,

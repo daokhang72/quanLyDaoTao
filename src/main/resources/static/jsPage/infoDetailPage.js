@@ -1,6 +1,7 @@
 import { loadCT,addKhungCT} from '/js/frame.js';
+import { loadHP,handleSearchStudy,addhStudy} from '/js/study.js';
 
-export function loadKhungCTDT(id) {
+export function DetailCTDT(id) {
     const content = document.querySelector(".content");
     if (!content) return;
 
@@ -34,11 +35,41 @@ export function loadKhungCTDT(id) {
                         <tbody></tbody>
                     </table>
                 </div>
+                <div id="another" class="tab-panel">
+                    <h1 class="welcome">HỌC PHẦN</h1>
+                    <div class="top-bar">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="search-input"
+                                placeholder="Nhập tên, bậc, khoa quản lý, ..." />
+                            <button class="search-buttonHP">🔍</button>
+                        </div>
+                        <div class="add-button-container">
+                            <button class="add-buttonHP">➕ Thêm Học Phần</button>
+                        </div>
+                    </div>
+                    <table class="study">
+                        <thead>
+                            <tr>
+                                <th>Tên Học Phần</th>
+                                <th>Số Tín Chỉ</th>
+                                <th>Lý Thuyết</th>
+                                <th>Thực Hành</th>
+                                <th>Thực Tập</th>
+                                <th>Cộng</th>
+                                <th>Hệ số học phần</th>
+                                <th>Tác Vụ</th>
+                            </tr>
+                            <tr>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     `;
-    window.onload = loadCT();
-
+    window.onload = loadCT(id);
+    window.onload = loadHP(id);
 
     const tabButtons = content.querySelectorAll(".tab-btn");
     const tabPanels = content.querySelectorAll(".tab-panel");
@@ -61,5 +92,16 @@ export function loadKhungCTDT(id) {
         addButton.addEventListener('click', function () {
             addKhungCT(id);
         });
+    }
+
+    const searchButtonHP = content.querySelector('.search-buttonHP');
+    const addButtonHP = content.querySelector('.add-buttonHP');
+
+    if (searchButtonHP) {
+        searchButtonHP.addEventListener('click', handleSearchStudy);
+    }
+
+    if (addButtonHP) {
+        addButtonHP.addEventListener('click', addhStudy);
     }
 }

@@ -1,6 +1,5 @@
 package com.QLDaoTao.controller;
 
-import com.QLDaoTao.dto.request.HocPhanFilterRequest;
 import com.QLDaoTao.dto.request.HocPhanRequest;
 import com.QLDaoTao.dto.response.HocPhanResponse;
 import com.QLDaoTao.service.HocPhanservice;
@@ -26,7 +25,10 @@ public class HocPhanController {
     public ResponseEntity<List<HocPhanResponse>> layToanBoHocPhan(){
         return ResponseEntity.ok(hocPhanservice.layToanBoHocPhan());
     }
-
+    @GetMapping("/{ctdtId}")
+    public ResponseEntity<List<HocPhanResponse>> getByCTDT(@PathVariable Integer ctdtId){
+        return ResponseEntity.ok(hocPhanservice.getKhungByCTDT(ctdtId));
+    }
     @PutMapping("/{hocPhanId}")
     public ResponseEntity<HocPhanResponse> suaHocPhan(@PathVariable  Integer id, @RequestBody @Valid HocPhanRequest request){
         return ResponseEntity.ok(hocPhanservice.suaHocPhan(id, request));
@@ -37,8 +39,8 @@ public class HocPhanController {
         hocPhanservice.xoaHocPhan(id);
     }
     @GetMapping("/searchAdvanced")
-    public ResponseEntity<List<HocPhanResponse>> filterHocPhan(@RequestBody @Valid HocPhanFilterRequest filter) {
-        return ResponseEntity.ok(hocPhanservice.timKiemHocPhan(filter));
+    public ResponseEntity<List<HocPhanResponse>> filterHocPhan(@RequestParam String keyword) {
+        return ResponseEntity.ok(hocPhanservice.timKiemHocPhan(keyword));
     }
 
 }

@@ -15,15 +15,16 @@ import lombok.Setter;
 public class KhungChuongTrinh {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
- 	private int khungId;
-	
-	 private int ctdtId;
+ 	private Integer khungId;
 
-	 private String khoiKienThuc;
+	@Column(name = "ctdt_id")
+	private Integer ctdt;
 
-	 private String tenNhom;
+	private String khoiKienThuc;
 
-	 private int soTinChiBatBuoc;
+	private String tenNhom;
 
-	 private int soTinChiTuChon;
+	private Integer soTinChiBatBuoc;
+
+	private Integer soTinChiTuChon;
 }

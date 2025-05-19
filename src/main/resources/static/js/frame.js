@@ -1,7 +1,7 @@
-import { getAllKhungCT,createKhung,deleteKhungById,updateKhungById} from '/jsApi/khungctJSAPI.js';
+import { getKhungByCTDTId,createKhung,deleteKhungById,updateKhungById} from '/jsApi/khungctJSAPI.js';
 
-export function loadCT() {
-    getAllKhungCT().then(data => {
+export function loadCT(id) {
+    getKhungByCTDTId(id).then(data => {
         const table = document.querySelector('.frameTable');
         const tbody = table.querySelector('tbody');
         tbody.innerHTML = '';
@@ -298,7 +298,7 @@ function editKhungCT(id,button) {
 }
 function createFormEditPortal(data) {
     createFormPortal('Chỉnh Sửa Khung Chương Trình', data, (formData) => {
-        const { ctdtId, ...body } = data;
+        const { khungId, ...body } = data;
         return updateKhungById(data.khungId, formData)
             .then((response) => {
                 if(response.status==200){

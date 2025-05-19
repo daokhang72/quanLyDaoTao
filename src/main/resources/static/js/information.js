@@ -1,8 +1,8 @@
 import { getAllCTDT, deleteCTDTByid,createCTDT,timKiemThongTinChung,updateCTDTById } from '/jsApi/ctdtJSAPI.js';
-import { loadKhungCTDT } from '/jsPage/framePage.js';
+import { DetailCTDT } from '/jsPage/infoDetailPage.js';
 
 function xemKhungCTDT(id){
-    loadKhungCTDT(id);
+    DetailCTDT(id);
 }
 
 export function loadCTDT() {
