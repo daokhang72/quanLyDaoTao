@@ -1,28 +1,52 @@
 import {getHocPhanByCtdt} from '/jsApi/hocPhanJSAPI.js';
+import { getKhungByCTDTId} from '/jsApi/khungctJSAPI.js';
 
 export function loadHP(id) {
-    getHocPhanByCtdt(id).then(data => {
-        const table = document.querySelector('.study');
-        const tbody = table.querySelector('tbody');
-        tbody.innerHTML = '';
+    const khungPromise = getKhungByCTDTId(id);
+    const hocPhanPromise = getHocPhanByCtdt(id);
 
-        data.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.tenHocPhan || ''}</td>
-                <td>${item.soTinChi || 0}</td>
-                <td>${item.lyThuyet || 0}</td>
-                <td>${item.thucHanh || 0}</td>
-                <td>${item.thucTap || 0}</td>
-                <td>${item.heSo || 1}</td>
-            `;
+    Promise.all([khungPromise, hocPhanPromise])
+        .then(([dataKhungId, dataHocPhan]) => {
+            const tenNhomMap = {};
+            dataKhungId.forEach(khung => {
+                tenNhomMap[khung.khungId] = khung.tenNhom;
+            });
 
-            // Nếu cần dữ liệu khi sửa/xoá
-            row.dataset.id = item.id;
+            const hocPhanTheoNhom = {};
+            dataHocPhan.forEach(hp => {
+                const tenNhom = tenNhomMap[hp.khungId] || 'Nhóm không rõ';
+                if (!hocPhanTheoNhom[tenNhom]) {
+                    hocPhanTheoNhom[tenNhom] = [];
+                }
+                hocPhanTheoNhom[tenNhom].push(hp);
+            });
 
-            tbody.appendChild(row);
+            const table = document.querySelector('.study');
+            const tbody = table.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            Object.entries(hocPhanTheoNhom).forEach(([tenNhom, hocPhans]) => {
+                const groupRow = document.createElement('tr');
+                groupRow.innerHTML = `<td colspan="7" style="font-weight:bold;">${tenNhom}</td>`;
+                tbody.appendChild(groupRow);
+
+                hocPhans.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.tenHocPhan || ''}</td>
+                        <td>${item.soTinChi || 0}</td>
+                        <td>${item.soTietLyThuyet || 0}</td>
+                        <td>${item.soTietThucHanh || 0}</td>
+                        <td>${item.soTietThucTap || 0}</td>
+                        <td>${item.soTietLyThuyet + item.soTietThucHanh + item.soTietThucTap || 0}</td>
+                        <td>${item.heSoHocPhan || 1}</td>
+                    `;
+                    row.dataset.id = item.id;
+                    tbody.appendChild(row);
+                });
+            });
+        })
+        .catch(error => {
+            console.error('Lỗi khi tải dữ liệu học phần hoặc khung:', error);
         });
-    }).catch(error => {
-        console.error('Lỗi khi tải dữ liệu Học Phần:', error);
-    });
 }

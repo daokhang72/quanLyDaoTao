@@ -8,5 +8,5 @@ import java.util.List;
 
 @Repository
 public interface KhungChuongTrinhRepository extends JpaRepository<KhungChuongTrinh, Integer> {
-    List<KhungChuongTrinh> findByCtdt_CtdtId(Integer ctdtId);
+    List<KhungChuongTrinh> findByCtdt(Integer ctdt);
 }

@@ -17,9 +17,8 @@ public class KhungChuongTrinh {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
  	private Integer khungId;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ctdt")
-	private ThongTinChung ctdt;
+	@Column(name = "ctdt_id")
+	private Integer ctdt;
 
 	private String khoiKienThuc;
 

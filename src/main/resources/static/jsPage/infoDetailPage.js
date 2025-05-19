@@ -45,7 +45,8 @@ export function DetailCTDT(id) {
                                 <th>Lý Thuyết</th>
                                 <th>Thực Hành</th>
                                 <th>Thực Tập</th>
-                                <th>Hệ Số</th>
+                                <th>Cộng</th>
+                                <th>Hệ số học phần</th>
                             </tr>
                             <tr>
                          

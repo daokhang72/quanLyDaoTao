@@ -6,7 +6,7 @@ import com.QLDaoTao.model.ThongTinChung;
 public record KhungChuongTrinhResponse(
         int khungId,
 
-        ThongTinChung ctdtId,
+        Integer ctdtId,
 
         String khoiKienThuc,
 

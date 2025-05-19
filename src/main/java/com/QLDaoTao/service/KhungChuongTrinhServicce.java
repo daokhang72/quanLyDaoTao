@@ -61,7 +61,7 @@ public class KhungChuongTrinhServicce {
     }
 
     public List<KhungChuongTrinhResponse> getKhungByCTDT(Integer ctdtId) {
-        List<KhungChuongTrinh> results =  khungChuongTrinhRepository.findByCtdt_CtdtId(ctdtId);
+        List<KhungChuongTrinh> results =  khungChuongTrinhRepository.findByCtdt(ctdtId);
         List<KhungChuongTrinhResponse> dtos = results.stream()
                 .map(KhungChuongTrinhResponse::of)
                 .collect(Collectors.toList());

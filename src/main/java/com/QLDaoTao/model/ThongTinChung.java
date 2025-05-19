@@ -39,7 +39,4 @@ public class ThongTinChung {
 
     private String banHanh;
 
-    @OneToMany(mappedBy = "ctdt", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private List<KhungChuongTrinh> danhSachKhung;
-    
 }
