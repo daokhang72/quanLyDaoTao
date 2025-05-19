@@ -74,8 +74,4 @@ export function searchHocPhan(keyword) {
         .then(data => {
             return data;
         })
-        .catch(error => {
-            console.error("Lỗi:", error);
-            return [];
-        });
 }
