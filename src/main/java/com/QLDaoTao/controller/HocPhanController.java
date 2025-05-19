@@ -30,13 +30,13 @@ public class HocPhanController {
         return ResponseEntity.ok(hocPhanservice.getKhungByCTDT(ctdtId));
     }
     @PutMapping("/{hocPhanId}")
-    public ResponseEntity<HocPhanResponse> suaHocPhan(@PathVariable  Integer id, @RequestBody @Valid HocPhanRequest request){
-        return ResponseEntity.ok(hocPhanservice.suaHocPhan(id, request));
+    public ResponseEntity<HocPhanResponse> suaHocPhan(@PathVariable  Integer hocPhanId, @RequestBody @Valid HocPhanRequest request){
+        return ResponseEntity.ok(hocPhanservice.suaHocPhan(hocPhanId, request));
     }
 
     @DeleteMapping("/{hocPhanId}")
-    public void xoaHocPhan(@PathVariable Integer id){
-        hocPhanservice.xoaHocPhan(id);
+    public void xoaHocPhan(@PathVariable Integer hocPhanId){
+        hocPhanservice.xoaHocPhan(hocPhanId);
     }
     @GetMapping("/searchAdvanced")
     public ResponseEntity<List<HocPhanResponse>> filterHocPhan(@RequestParam String keyword) {

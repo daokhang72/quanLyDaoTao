@@ -9,29 +9,32 @@ import com.QLDaoTao.repository.HocPhanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class HocPhanservice {
-    @Autowired
     final private HocPhanRepository hocPhanRepository;
 
-    public HocPhanResponse taoHocPhan(HocPhanRequest request){
-        HocPhan result =  hocPhanRepository.save(new HocPhan(
-                request.soTinChi(),
-                request.khungId(),
-                request.tenHocPhan(),
-                request.soTinChi(),
-                request.soTietLyThuyet(),
-                request.soTietThucHanh(),
-                request.soTietThucTap(),
-                request.heSoHocPhan()
-        ));
+    public HocPhanResponse taoHocPhan(HocPhanRequest request) {
+        HocPhan hocPhan = new HocPhan();
+
+        hocPhan.setKhungId(request.khungId());
+        hocPhan.setTenHocPhan(request.tenHocPhan());
+        hocPhan.setSoTinChi(request.soTinChi());
+        hocPhan.setSoTietLyThuyet(request.soTietLyThuyet());
+        hocPhan.setSoTietThucHanh(request.soTietThucHanh());
+        hocPhan.setSoTietThucTap(request.soTietThucTap());
+        hocPhan.setHeSoHocPhan(request.heSoHocPhan());
+
+        HocPhan result = hocPhanRepository.save(hocPhan);
         return HocPhanResponse.of(result);
     }
+
 
     public List<HocPhanResponse> layToanBoHocPhan(){
         List<HocPhan> results =  hocPhanRepository.findAll();

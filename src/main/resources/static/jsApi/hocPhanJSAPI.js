@@ -53,27 +53,18 @@ export function updateHocPhanById(id, data) {
 }
 
 // Xoá học phần theo ID
-export function deleteHocPhanById(id) {
-    return fetch(`${BASE_URL}/${id}`, {
+export async function deleteHocPhanById(id) {
+    await fetch(`${BASE_URL}/${id}`, {
         method: 'DELETE'
     })
-        .then(res => {
-            if (res.status !== 204) {
-                throw new Error('Xóa thất bại');
-            }
-            return { success: true };
-        })
-        .catch(err => {
-            console.error('Lỗi:', err);
-            throw err;
-        });
+    return
 }
 
 // Tìm kiếm nâng cao học phần
 export function searchHocPhan(keyword) {
     const url = `${BASE_URL}/searchAdvanced?keyword=${encodeURIComponent(keyword)}`;
 
-    fetch(url)
+    return fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Lỗi khi gọi API");
@@ -81,10 +72,6 @@ export function searchHocPhan(keyword) {
             return response.json();
         })
         .then(data => {
-            console.log("Kết quả tìm kiếm:", data);
-            // TODO: Hiển thị kết quả lên giao diện
+            return data;
         })
-        .catch(error => {
-            console.error("Lỗi:", error);
-        });
 }

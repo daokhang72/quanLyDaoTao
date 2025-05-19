@@ -98,10 +98,10 @@ export function DetailCTDT(id) {
     const addButtonHP = content.querySelector('.add-buttonHP');
 
     if (searchButtonHP) {
-        searchButtonHP.addEventListener('click', handleSearchStudy);
+        searchButtonHP.addEventListener('click', () => handleSearchStudy(id));
     }
 
     if (addButtonHP) {
-        addButtonHP.addEventListener('click', addhStudy);
+        addButtonHP.addEventListener('click', () => addhStudy(id) );
     }
 }
