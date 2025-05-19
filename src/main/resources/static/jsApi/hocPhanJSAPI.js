@@ -69,18 +69,22 @@ export function deleteHocPhanById(id) {
         });
 }
 
-// Tìm kiếm nâng cao học phần (filter)
-export function searchHocPhanAdvanced(filterData) {
-    return fetch(`${BASE_URL}/searchAdvanced`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(filterData)
-    })
-        .then(res => res.json())
-        .catch(err => {
-            console.error('Lỗi:', err);
-            throw err;
+// Tìm kiếm nâng cao học phần
+export function searchHocPhan(keyword) {
+    const url = `${BASE_URL}/searchAdvanced?keyword=${encodeURIComponent(keyword)}`;
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Lỗi khi gọi API");
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log("Kết quả tìm kiếm:", data);
+            // TODO: Hiển thị kết quả lên giao diện
+        })
+        .catch(error => {
+            console.error("Lỗi:", error);
         });
 }

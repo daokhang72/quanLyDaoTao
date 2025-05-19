@@ -1,5 +1,5 @@
 import { loadCT,addKhungCT} from '/js/frame.js';
-import { loadHP} from '/js/study.js';
+import { loadHP,handleSearchStudy,addhStudy} from '/js/study.js';
 
 export function DetailCTDT(id) {
     const content = document.querySelector(".content");
@@ -37,6 +37,16 @@ export function DetailCTDT(id) {
                 </div>
                 <div id="another" class="tab-panel">
                     <h1 class="welcome">HỌC PHẦN</h1>
+                    <div class="top-bar">
+                        <div class="search-container">
+                            <input type="text" id="searchInput" class="search-input"
+                                placeholder="Nhập tên, bậc, khoa quản lý, ..." />
+                            <button class="search-buttonHP">🔍</button>
+                        </div>
+                        <div class="add-button-container">
+                            <button class="add-buttonHP">➕ Thêm Học Phần</button>
+                        </div>
+                    </div>
                     <table class="study">
                         <thead>
                             <tr>
@@ -47,9 +57,9 @@ export function DetailCTDT(id) {
                                 <th>Thực Tập</th>
                                 <th>Cộng</th>
                                 <th>Hệ số học phần</th>
+                                <th>Tác Vụ</th>
                             </tr>
                             <tr>
-                         
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -82,5 +92,16 @@ export function DetailCTDT(id) {
         addButton.addEventListener('click', function () {
             addKhungCT(id);
         });
+    }
+
+    const searchButtonHP = content.querySelector('.search-buttonHP');
+    const addButtonHP = content.querySelector('.add-buttonHP');
+
+    if (searchButtonHP) {
+        searchButtonHP.addEventListener('click', handleSearchStudy);
+    }
+
+    if (addButtonHP) {
+        addButtonHP.addEventListener('click', addhStudy);
     }
 }
