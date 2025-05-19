@@ -98,7 +98,7 @@ export function DetailCTDT(id) {
     const addButtonHP = content.querySelector('.add-buttonHP');
 
     if (searchButtonHP) {
-        searchButtonHP.addEventListener('click', handleSearchStudy);
+        searchButtonHP.addEventListener('click', () => handleSearchStudy(id));
     }
 
     if (addButtonHP) {

@@ -73,7 +73,7 @@ export function deleteHocPhanById(id) {
 export function searchHocPhan(keyword) {
     const url = `${BASE_URL}/searchAdvanced?keyword=${encodeURIComponent(keyword)}`;
 
-    fetch(url)
+    return fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error("Lỗi khi gọi API");
@@ -81,10 +81,10 @@ export function searchHocPhan(keyword) {
             return response.json();
         })
         .then(data => {
-            console.log("Kết quả tìm kiếm:", data);
-            // TODO: Hiển thị kết quả lên giao diện
+            return data;
         })
         .catch(error => {
             console.error("Lỗi:", error);
+            return [];
         });
 }
