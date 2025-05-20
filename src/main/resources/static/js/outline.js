@@ -1,4 +1,5 @@
 import {getAllHocPhan} from '/jsApi/hocPhanJSAPI.js';
+import {layDeCuongTheoIdMon} from '/jsApi/deCuongJSAPI.js';
 
 export async function LoadHocPhan() {
     try {
@@ -20,20 +21,5 @@ export async function LoadHocPhan() {
 }
 
 export async function getDeCuongChiTiet(maHp) {
-    return [
-        {
-            id: 1,
-            tenBoPhan: "Khoa Công nghệ thông tin",
-            diemDanhGia: "8.5",
-            trongSo: "40%",
-            hinhThuc: "Bài tập lớn"
-        },
-        {
-            id: 2,
-            tenBoPhan: "Phòng khảo thí",
-            diemDanhGia: "9.0",
-            trongSo: "60%",
-            hinhThuc: "Thi cuối kỳ"
-        }
-    ];
+    return layDeCuongTheoIdMon(maHp);
 }

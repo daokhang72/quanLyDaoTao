@@ -25,7 +25,7 @@ public class DeCuongChiTietService{
                 .orElseThrow(() -> new CustomException(ErrorCode.HocPhan_NOT_FOUND));
 
         DeCuongChiTiet entity = new DeCuongChiTiet();
-//        entity.setMaHp(hocPhan);
+        entity.setMaHp(hocPhan.getMaHp());
         entity.setTenBoPhan(request.tenBoPhan());
         entity.setDiemDanhGia(request.diemDanhGia());
         entity.setTrongSo(request.trongSo());
@@ -43,8 +43,6 @@ public class DeCuongChiTietService{
     public DeCuongChiTietResponse capNhat(int id, DeCuongChiTietRequest request) {
         DeCuongChiTiet entity = repository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy đề cương với id = " + id));
-
-//        entity.setMaHp(request.maHp());
         entity.setTenBoPhan(request.tenBoPhan());
         entity.setDiemDanhGia(request.diemDanhGia());
         entity.setTrongSo(request.trongSo());
@@ -56,4 +54,12 @@ public class DeCuongChiTietService{
     public void xoa(int id) {
         repository.deleteById(id);
     }
+
+    public List<DeCuongChiTietResponse> layTheoIdMon(Long idMon) {
+        return repository.findByMaHp(idMon)
+                .stream()
+                .map(DeCuongChiTietResponse::of)
+                .collect(Collectors.toList());
+    }
+
 }
