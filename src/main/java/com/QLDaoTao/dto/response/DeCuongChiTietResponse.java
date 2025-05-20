@@ -4,7 +4,7 @@ import com.QLDaoTao.model.DeCuongChiTiet;
 
 public record DeCuongChiTietResponse(
         Long deCuongId,
-        Long maHp,
+        Integer maHp,
         String tenBoPhan,
         String diemDanhGia,
         Float trongSo,

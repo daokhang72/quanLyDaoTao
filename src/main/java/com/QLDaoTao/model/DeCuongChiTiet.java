@@ -15,9 +15,11 @@ import lombok.Setter;
 public class DeCuongChiTiet {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "decuong_id")
 	private Long deCuongId;
-	
-    private Long maHp;
+
+    @Column(name = "ma_hp")
+    private Integer maHp;
 
     private String tenBoPhan;
 

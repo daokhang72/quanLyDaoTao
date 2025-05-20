@@ -36,4 +36,10 @@ public class DeCuongChiTietController {
         deCuongService.xoa(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/mon/{idMon}")
+    public ResponseEntity<List<DeCuongChiTietResponse>> layTheoIdMon(@PathVariable Long idMon) {
+        return ResponseEntity.ok(deCuongService.layTheoIdMon(idMon));
+    }
+
 }

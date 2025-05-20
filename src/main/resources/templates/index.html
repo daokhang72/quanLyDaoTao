@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/css/frame.css">
     <link rel="stylesheet" href="/css/study.css">
     <link rel="stylesheet" href="/css/user.css">
+    <link rel="stylesheet" href="/css/outline.css">
 </head>
 <body>
 <div class="container">
@@ -21,7 +22,7 @@
         <nav class="menu">
             <a data-page="home" class="active">Trang chủ</a>
             <a data-page="information">Thông tin CTĐT</a>
-            <a>Đề cương chi tiết</a>
+            <a data-page="outline">Đề cương chi tiết</a>
             <a>Kế hoạch dạy học</a>
             <a>Phân công giảng dạy</a>
             <a>Giảng viên</a>
@@ -38,6 +39,7 @@
     import createHome from '/jsPage/homePage.js';
     import createInformation from '/jsPage/informationPage.js';
     import createUser from '/jsPage/userPage.js';
+    import createOutline from '/jsPage/outlinePage.js';
 
     window.onload = createHome;
 
@@ -48,7 +50,8 @@
         const routes = {
             home: createHome,
             information:createInformation,
-            user: createUser
+            user: createUser,
+            outline: createOutline
         }
 
         menuItems.forEach((item) => {

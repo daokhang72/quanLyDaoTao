@@ -31,12 +31,6 @@ public class AdminController {
     @GetMapping()
     public String homeAdmin() {return "index";}
 
-     @GetMapping("/decuong")
-    public String DeCuongCTAdmin() {
-        return "decuongCT";
-    }
-
-
     @GetMapping("/hocphan")
     public String dsHPAdmin() {
         return "dsHPAdmin";
