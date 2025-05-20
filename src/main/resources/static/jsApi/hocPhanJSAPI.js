@@ -1,7 +1,7 @@
 const BASE_URL = 'http://localhost:8081/hocphan';
 
 // Lấy toàn bộ học phần
-function getAllHocPhan() {
+export function getAllHocPhan() {
     return fetch(BASE_URL)
         .then(res => res.json())
         .catch(err => {
