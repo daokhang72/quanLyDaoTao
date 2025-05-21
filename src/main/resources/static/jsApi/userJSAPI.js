@@ -69,17 +69,5 @@ export function deleteUserById(userId) {
         throw error;
     });
 }
-export function handleSearch() {
-    const input = document.getElementById("searchInput").value.toLowerCase();
-    const rows = document.querySelectorAll(".user-table tbody tr");
 
-    rows.forEach(row => {
-        const userName = row.cells[0].innerText.toLowerCase(); // Cột đầu tiên là tên người dùng
-        if (userName.includes(input)) {
-            row.style.display = ""; // Hiển thị
-        } else {
-            row.style.display = "none"; // Ẩn
-        }
-    });
-}
 

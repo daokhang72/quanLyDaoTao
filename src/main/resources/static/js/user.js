@@ -192,3 +192,17 @@ export function handleSearch() {
         }
     });
 }
+export function loadUserOptions(selectId) {
+    fetch("/admin/user/list")
+        .then(res => res.json())
+        .then(users => {
+            const select = document.getElementById(selectId);
+            users.forEach(user => {
+                const option = document.createElement("option");
+                option.value = user.userId;
+                option.textContent = `${user.userFullName} (${user.userEmail})`;
+                select.appendChild(option);
+            });
+        })
+        .catch(err => console.error("Lỗi khi tải danh sách người dùng:", err));
+}
