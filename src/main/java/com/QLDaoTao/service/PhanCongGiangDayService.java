@@ -20,7 +20,6 @@ public class PhanCongGiangDayService {
         PhanCongGiangDay e = new PhanCongGiangDay();
         e.setMahp(r.mahp());
         e.setNhom(r.nhom());
-        e.setGiangvienId(r.giangvienId());
         e.setHotencbgd(r.hotencbgd());
         e.setSotietthuchien(r.sotietthuchien());
         e.setSotietthucte(r.sotietthucte());
@@ -36,7 +35,6 @@ public class PhanCongGiangDayService {
                 .orElseThrow(() -> new RuntimeException("Không tìm thấy phân công giảng dạy id = " + id));
         e.setMahp(r.mahp());
         e.setNhom(r.nhom());
-        e.setGiangvienId(r.giangvienId());
         e.setHotencbgd(r.hotencbgd());
         e.setSotietthuchien(r.sotietthuchien());
         e.setSotietthucte(r.sotietthucte());

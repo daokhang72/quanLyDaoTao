@@ -1,0 +1,24 @@
+.pcgd-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fdf2b2;
+}
+
+.pcgd-table thead {
+    background-color: yellow;
+    font-weight: bold;
+}
+
+.pcgd-table th, .hp-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: center;
+}
+
+.pcgd-table td {
+    height: 30px;
+}
+
+.pcgd-table img:hover {
+    cursor: pointer;
+}

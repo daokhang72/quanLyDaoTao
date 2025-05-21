@@ -124,30 +124,7 @@
           border: 2px solid black;
         }
 
-        .pcgd-table {
-          width: 100%;
-          border-collapse: collapse;
-          background-color: #fdf2b2;
-        }
 
-        .pcgd-table thead {
-          background-color: yellow;
-          font-weight: bold;
-        }
-
-        .pcgd-table th, .hp-table td {
-          border: 1px solid #ccc;
-          padding: 8px;
-          text-align: center;
-        }
-
-        .pcgd-table td {
-          height: 30px;
-        }
-
-        .pcgd-table img:hover {
-          cursor: pointer;
-        }
     </style>
 </head>
 <body>
@@ -173,34 +150,7 @@
         </nav>
     </div>
     <main class="content">
-        <h1>Danh sách học phần đã phân công</h1>
-        <div class="top-bar">
-            <div class="search-container">
-                <input type="text" id="searchInput" class="search-input"
-                       placeholder="Nhập tên, số tín chỉ, ..."/>
-                <button class="search-button" onclick="handleSearch()">🔍</button>
-            </div>
-            <div class="button-container">
-                <button class="filter-button">HP Đã Mở ⌵</button>
-                <button class="add-button" onclick="addCTDT()">➕ Thêm Học Phần</button>
-            </div>
-        </div>
 
-        <table class="pcgd-table">
-            <thead>
-            <tr>
-                <th>Mã học phần</th>
-                <th>Tên học phần</th>
-                <th>Giảng viên</th>
-                <th>Nhóm</th>
-                <th>Số tiết thực hiện</th>
-                <th>Số tiết thực tế</th>
-                <th>Tác vụ</th>
-            </tr>
-            </thead>
-            <tbody>
-            </tbody>
-        </table>
     </main>
 </div>
 </body>
