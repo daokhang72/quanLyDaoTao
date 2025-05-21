@@ -15,7 +15,8 @@ import lombok.Setter;
 public class KeHoachDayHoc {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int keHoachId;
+    @Column(name = "kehoach_id")
+    private int keHoachId;
 	
     private int maHp;
 
