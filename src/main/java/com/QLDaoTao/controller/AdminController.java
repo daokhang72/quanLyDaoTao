@@ -31,15 +31,6 @@ public class AdminController {
     @GetMapping()
     public String homeAdmin() {return "index";}
 
-    @GetMapping("/hocphan")
-    public String dsHPAdmin() {
-        return "dsHPAdmin";
-    }
-
-    @GetMapping("/dayhoc")
-    public String KHdayhoc() {
-        return "KHdayhoc";
-    }
 
     @GetMapping("/monhom")
     public String KHmonhom() {return "KHmonhom";}
