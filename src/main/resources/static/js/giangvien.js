@@ -283,4 +283,46 @@ export function loadScript(src, callback) {
   script.onload = callback;
   document.head.appendChild(script);
 }
+export function handleImportExcel() {
+    const input = document.getElementById("excelFileInput");
+    if (input) {
+        input.click();
+
+        input.onchange = (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: "array" });
+
+                const firstSheetName = workbook.SheetNames[0];
+                const worksheet = workbook.Sheets[firstSheetName];
+
+                const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                console.log("Dữ liệu Excel:", jsonData);
+
+                alert("Đã đọc xong file Excel! Xem console log.");
+            };
+            reader.readAsArrayBuffer(file);
+        };
+    } else {
+        alert("Không tìm thấy input file!");
+    }
+}
+export function handleExportExcel() {
+    const table = document.getElementById("giangVienTable");
+    if (!table) {
+        alert("Không tìm thấy bảng dữ liệu!");
+        return;
+    }
+
+    const workbook = XLSX.utils.table_to_book(table, { sheet: "GiangVien" });
+
+    // Ghi file Excel
+    XLSX.writeFile(workbook, "giangvien.xlsx");
+}
+
+
 

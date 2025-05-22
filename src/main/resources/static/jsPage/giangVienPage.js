@@ -1,4 +1,4 @@
-import {handleSearch,loadGV,addGV,handleEditFormSubmit,deleteGV,showThongKeGV,loadScript} from '/js/giangvien.js';
+import {handleSearch,loadGV,addGV,handleEditFormSubmit,deleteGV,showThongKeGV,loadScript,handleImportExcel,handleExportExcel} from '/js/giangvien.js';
 import {loadUserOptions} from '/js/user.js';
 
 export default function createGV() {
@@ -15,6 +15,7 @@ export default function createGV() {
                     <div class="button-container">
                         <button id="importBtn" class="import-button">Import Excel 📥</button>
                         <button id="exporttBtn" class="export-button">Export Excel 📤</button>
+                        <input type="file" id="excelFileInput" accept=".xlsx, .xls" style="display: none;">
                         <button id="filtertBtn" class="filter-button">Thống kê 📊</button>
                         <button id="addBtn" class="add-button">➕ Thêm Giảng Viên</button>
                     </div>
@@ -114,7 +115,7 @@ export default function createGV() {
                             </div>
                         </div>
                 `;
-                document.getElementById("addBtn").addEventListener("click", addGV);
+               document.getElementById("addBtn").addEventListener("click", addGV);
                document.getElementById("filtertBtn").addEventListener("click", () => {
                    const statisticModal = document.getElementById("statisticModal");
 
@@ -125,6 +126,18 @@ export default function createGV() {
                            showThongKeGV();
                        });
                    }
+               });
+               document.getElementById("importBtn").addEventListener("click", () => {
+                    loadScript("https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js", () => {
+                            console.log("Đã load xong thư viện XLSX.");
+                            handleImportExcel();
+                    });
+               });
+               document.getElementById("exporttBtn").addEventListener("click", () => {
+                   loadScript("https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js", () => {
+                       console.log("Đã load xong thư viện XLSX.");
+                       handleExportExcel();
+                   });
                });
                 document.getElementById("cancelAddGV").addEventListener("click", () => {
                         document.getElementById("addGVModal").style.display = "none";
