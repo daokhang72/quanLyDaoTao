@@ -179,6 +179,8 @@ export function deleteUser() {
             });
     }
 }
+
+
 export function handleSearch() {
     const input = document.getElementById("searchInput").value.toLowerCase();
     const rows = document.querySelectorAll(".user-table tbody tr");
@@ -192,6 +194,8 @@ export function handleSearch() {
         }
     });
 }
+
+
 export function loadUserOptions(selectId) {
     fetch("/admin/user/list")
         .then(res => res.json())
@@ -206,3 +210,73 @@ export function loadUserOptions(selectId) {
         })
         .catch(err => console.error("Lỗi khi tải danh sách người dùng:", err));
 }
+
+
+export function renderUserStats() {
+  fetchUserList()
+    .then(res => {
+      if (res.status !== 200) {
+        document.getElementById("stat-content").innerHTML = "<p>Lỗi khi tải dữ liệu người dùng.</p>";
+        return;
+      }
+
+      const users = res.data;
+
+      // Tính toán
+      const total = users.length;
+      const adminCount = users.filter(u => u.admin).length;
+      const userCount = total - adminCount;
+      const adminPercent = ((adminCount / total) * 100).toFixed(1);
+      const userPercent = ((userCount / total) * 100).toFixed(1);
+
+      // Tạo HTML thống kê
+      let html = `
+        <h3>Thống kê Người dùng</h3>
+        <ul>
+          <li>🔢 Tổng số người dùng: <b>${total}</b></li>
+          <li>👤 Số người là Admin: <b>${adminCount}</b></li>
+          <li>👥 Số người là User thường: <b>${userCount}</b></li>
+          <li>📊 Tỷ lệ Admin/User: <b>${adminPercent}% / ${userPercent}%</b></li>
+        </ul>
+        <canvas id="userPieChart" width="300" height="300"></canvas>
+      `;
+
+      document.getElementById("stat-content").innerHTML = html;
+
+      drawUserPieChart(adminCount, userCount);
+    })
+    .catch(err => {
+      document.getElementById("stat-content").innerHTML = "<p>Không thể tải dữ liệu người dùng.</p>";
+      console.error(err);
+    });
+}
+function drawUserPieChart(adminCount, userCount) {
+  const ctx = document.getElementById("userPieChart").getContext("2d");
+
+  new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: ["Admin", "User thường"],
+      datasets: [{
+        data: [adminCount, userCount],
+        backgroundColor: ["#36A2EB", "#FF6384"]
+      }]
+    },
+    options: {
+      responsive: false,
+      plugins: {
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  });
+}
+
+export function loadScript(src, callback) {
+  const script = document.createElement("script");
+  script.src = src;
+  script.onload = callback;
+  document.head.appendChild(script);
+}
+

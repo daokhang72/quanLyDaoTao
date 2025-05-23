@@ -10,7 +10,7 @@ export default function createGV() {
                 <div class="top-bar">
                     <div class="search-container">
                         <input type="text" id="searchInput" class="search-input"placeholder="Nhập tên giảng viên ..."/>
-                        <button class="search-button">🔍</button>
+                        <button id="searchBtn" class="search-button">🔍</button>
                     </div>
                     <div class="button-container">
                         <button id="importBtn" class="import-button">Import Excel 📥</button>
@@ -142,6 +142,8 @@ export default function createGV() {
                 document.getElementById("cancelAddGV").addEventListener("click", () => {
                         document.getElementById("addGVModal").style.display = "none";
                 });
+
+                document.getElementById("searchBtn").addEventListener("click", handleSearch);
 
                 document.getElementById("cancelEditGV").addEventListener("click", () => {
                         document.getElementById("editGVModal").style.display = "none";

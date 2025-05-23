@@ -7,18 +7,26 @@ export function createUser(formData) {
         },
         body: JSON.stringify(formData)
     })
-        .then(async response => {
-            const data = await response.json();
-            return {
-                status: response.status,
-                data: data
-            };
-        })
-        .catch(error => {
-            console.error('Lỗi gửi dữ liệu:', error);
-            throw error;
-        });
+    .then(async response => {
+        const text = await response.text(); // lấy raw text
+        let data = {};
+        try {
+            data = text ? JSON.parse(text) : {}; // tránh lỗi nếu text rỗng
+        } catch (e) {
+            console.warn("Phản hồi không phải JSON hợp lệ:", text);
+        }
+
+        return {
+            status: response.status,
+            data: data
+        };
+    })
+    .catch(error => {
+        console.error('Lỗi gửi dữ liệu:', error);
+        throw error;
+    });
 }
+
 export function fetchUserList() {
     return fetch("/admin/user/list")
         .then(async response => {

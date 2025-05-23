@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="/css/plan.css">
     <link rel="stylesheet" href="/css/assignment.css">
     <link rel="stylesheet" href="/css/giangvien.css">
+    <link rel="stylesheet" href="/css/thongke.css">
 </head>
 <body>
 <div class="container">
@@ -30,7 +31,7 @@
             <a data-page="assignment">Phân công giảng dạy</a>
             <a data-page="giangvien">Giảng viên</a>
             <a>Mẫu in</a>
-            <a>Thống kê</a>
+            <a data-page="thongke">Thống kê</a>
             <a data-page="user">Quản lý người dùng</a>
         </nav>
     </div>
@@ -46,6 +47,7 @@
     import createPlan from '/jsPage/planPage.js';
     import createAssignment from '/jsPage/assignmentPage.js';
     import createGV from '/jsPage/giangVienPage.js';
+    import createTK from '/jsPage/thongKePage.js';
 
     window.onload = createHome;
 
@@ -60,7 +62,9 @@
             outline: createOutline,
             plan: createPlan,
             assignment: createAssignment,
-            giangvien: createGV
+            giangvien: createGV,
+            thongke: createTK
+
         }
 
         menuItems.forEach((item) => {
