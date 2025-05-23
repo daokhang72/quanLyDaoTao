@@ -63,3 +63,62 @@ body{
     padding: 40px;
     text-align: center;
 }
+.home-container {
+    text-align: center;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 10px;
+}
+
+.welcome {
+    font-size: 3rem;
+    font-weight: bold;
+    color: #4CAF50;
+}
+
+.sub-welcome {
+    font-size: 1.2rem;
+    color: #333;
+    margin-top: 10px;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.start-btn, .help-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    margin: 10px;
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+.start-btn:hover, .help-btn:hover {
+    background-color: #45a049;
+}
+
+.features {
+    margin-top: 30px;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.features h2 {
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.features ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.features li {
+    margin: 10px 0;
+}

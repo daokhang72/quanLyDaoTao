@@ -1,7 +1,7 @@
 import { loadCT,addKhungCT} from '/js/frame.js';
 import { loadHP,handleSearchStudy,addhStudy} from '/js/study.js';
 
-export function DetailCTDT(id) {
+export  function DetailCTDT(id) {
     const content = document.querySelector(".content");
     if (!content) return;
 
