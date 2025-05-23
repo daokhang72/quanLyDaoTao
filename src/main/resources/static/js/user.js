@@ -211,8 +211,13 @@ export function loadUserOptions(selectId) {
         .catch(err => console.error("Lỗi khi tải danh sách người dùng:", err));
 }
 
-
+let currentChart = null;
 export function renderUserStats() {
+
+if (currentChart) {
+    currentChart.destroy();
+    currentChart = null;
+  }
   fetchUserList()
     .then(res => {
       if (res.status !== 200) {
@@ -238,7 +243,7 @@ export function renderUserStats() {
           <li>👥 Số người là User thường: <b>${userCount}</b></li>
           <li>📊 Tỷ lệ Admin/User: <b>${adminPercent}% / ${userPercent}%</b></li>
         </ul>
-        <canvas id="userPieChart" width="300" height="300"></canvas>
+        <canvas id="PieChart" width="300" height="300"></canvas>
       `;
 
       document.getElementById("stat-content").innerHTML = html;
@@ -251,7 +256,7 @@ export function renderUserStats() {
     });
 }
 function drawUserPieChart(adminCount, userCount) {
-  const ctx = document.getElementById("userPieChart").getContext("2d");
+  const ctx = document.getElementById("PieChart").getContext("2d");
 
   new Chart(ctx, {
     type: "pie",

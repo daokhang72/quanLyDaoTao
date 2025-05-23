@@ -324,5 +324,87 @@ export function handleExportExcel() {
     XLSX.writeFile(workbook, "giangvien.xlsx");
 }
 
+let currentChart = null;
+
+export async function renderGVStats() {
+  if (currentChart) {
+    currentChart.destroy();
+    currentChart = null;
+  }
+
+  try {
+    const response = await fetchGVList();
+    if (response.status !== 200) {
+      document.getElementById("stat-content").innerHTML = `<p>Lỗi tải dữ liệu giảng viên.</p>`;
+      return;
+    }
+
+    const lecturers = response.data;
+    const total = lecturers.length;
+
+    const byLoai = {};
+    const byDonVi = {};
+    let missingEmail = 0;
+    let missingPhone = 0;
+
+    for (const gv of lecturers) {
+      byLoai[gv.loaiGiangVien] = (byLoai[gv.loaiGiangVien] || 0) + 1;
+      byDonVi[gv.donVi] = (byDonVi[gv.donVi] || 0) + 1;
+      if (!gv.email || gv.email.trim() === '') missingEmail++;
+      if (!gv.soDienThoai || gv.soDienThoai.trim() === '') missingPhone++;
+    }
+
+    let html = `
+      <h3>Thống kê Giảng viên</h3>
+      <ul>
+        <li>👨‍🏫 Tổng số giảng viên: <b>${total}</b></li>
+        <li>📧 Thiếu email: <b>${missingEmail}</b></li>
+        <li>📱 Thiếu số điện thoại: <b>${missingPhone}</b></li>
+        <li>📚 Phân loại giảng viên:</li>
+        <ul>
+          ${Object.entries(byLoai).map(([loai, count]) => `<li>- ${loai}: <b>${count}</b></li>`).join('')}
+        </ul>
+        <li>🏢 Theo đơn vị:</li>
+        <ul>
+          ${Object.entries(byDonVi).map(([dv, count]) => `<li>- ${dv}: <b>${count}</b></li>`).join('')}
+        </ul>
+      </ul>
+      <canvas id="PieChart" class="center-canvas" width="300" height="300"></canvas>
+    `;
+
+    document.getElementById("stat-content").innerHTML = html;
+
+    drawLecturerPieChart(byLoai);
+
+  } catch (err) {
+    console.error('Lỗi khi render thống kê giảng viên:', err);
+    document.getElementById("stat-content").innerHTML = `<p>Lỗi khi xử lý dữ liệu giảng viên.</p>`;
+  }
+}
+
+function drawLecturerPieChart(typeCounts) {
+  const ctx = document.getElementById("PieChart").getContext("2d");
+  const labels = Object.keys(typeCounts);
+  const data = Object.values(typeCounts);
+
+  currentChart = new Chart(ctx, {
+    type: "pie",
+    data: {
+      labels: labels,
+      datasets: [{
+        data: data,
+        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#AA65F5", "#7BDCB5"]
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: "bottom"
+        }
+      }
+    }
+  });
+}
 
 
