@@ -51,7 +51,7 @@ export default function createOutline() {
                     <td>${item.tenBoPhan}</td>
                     <td>${item.diemDanhGia}</td>
                     <td>${item.trongSo}</td>
-                    <td>${item.hinhThuc ?? ""}</td>
+                    <td>${item.hinhThucDanhGia ?? ""}</td>
                     <td>
                         <button class="button-frame edit-btn">Sửa</button>
                         <button class="button-frame delete-btn">Xóa</button>
@@ -109,7 +109,7 @@ export default function createOutline() {
         document.getElementById("tenBoPhanInput").value = item?.tenBoPhan ?? "";
         document.getElementById("diemDanhGiaInput").value = item?.diemDanhGia ?? "";
         document.getElementById("trongSoInput").value = item?.trongSo ?? "";
-        document.getElementById("hinhThucInput").value = item?.hinhThuc ?? "";
+        document.getElementById("hinhThucInput").value = item?.hinhThucDanhGia ?? "";
 
         document.getElementById("decuongModal").classList.remove("hidden");
     };
@@ -118,7 +118,12 @@ export default function createOutline() {
         document.getElementById("decuongModal").classList.add("hidden");
     });
 
-    document.getElementById("modalSaveBtn").addEventListener("click", async () => {
+//    Lỗi thêm 2 lần vào bảng
+    const saveBtn = document.getElementById("modalSaveBtn");
+    const newSaveBtn = saveBtn.cloneNode(true);
+    saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+    newSaveBtn.addEventListener("click", async () => {
         const tenBoPhan = document.getElementById("tenBoPhanInput").value;
         const diemDanhGia = parseFloat(document.getElementById("diemDanhGiaInput").value);
         const trongSo = parseFloat(document.getElementById("trongSoInput").value);
