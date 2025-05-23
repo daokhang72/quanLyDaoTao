@@ -1,7 +1,14 @@
 import { getKhungByCTDTId,createKhung,deleteKhungById,updateKhungById} from '/jsApi/khungctJSAPI.js';
-
+let currentCTDTId = null;
 export function loadCT(id) {
+ if (!id || id === "undefined") {
+        console.error("CTĐT ID không hợp lệ khi gọi loadCT");
+        return;
+    }
+
+    currentCTDTId = id; //lưu lại để dùng sau
     getKhungByCTDTId(id).then(data => {
+
         const table = document.querySelector('.frameTable');
         const tbody = table.querySelector('tbody');
         tbody.innerHTML = '';
@@ -79,7 +86,7 @@ export function addKhungCT(id) {
             .then((response) => {
                 if(response.status==200){
                     showBottomNotification("Thêm thành công!", true);
-                    loadCT();
+                    loadCT(id);
                 }else{
                     showBottomNotification(response.data.data.message, false);
                 }
@@ -268,9 +275,13 @@ function deleteKhungCT(id) {
 
     confirmBtn.onclick = () => {
         deleteKhungById(id)
-            .then(data => {
-                loadCT();
-            })
+//            .then(data => {
+//                loadCT(id);
+//            })
+        .then(() => {
+                        showBottomNotification('Xóa thành công!', true);
+                        loadCT(currentCTDTId); //dùng ID đang được lưu
+                    })
             .catch(err => {
                 showBottomNotification('Xóa thất bại!', false);
             });
@@ -303,7 +314,7 @@ function createFormEditPortal(data) {
             .then((response) => {
                 if(response.status==200){
                     showBottomNotification("Sửa thành công!", true);
-                    loadCT();
+                    loadCT(currentCTDTId);
                 }else{
                     showBottomNotification(response.data.data.message, false);
                 }
