@@ -4,6 +4,7 @@ import {
     updatePlanAPI,
     deletePlanAPI
 } from "/jsApi/planJSAPI.js";
+import { getAllHocPhan } from "/jsApi/hocPhanJSAPI.js";
 
 export default function createPlan() {
     const content = document.querySelector(".content");
@@ -40,7 +41,9 @@ export default function createPlan() {
                 <h2 id="modalTitle"></h2>
                 <input type="hidden" id="modalKeHoachId" />
                 <label>Mã học phần:</label>
-                <input type="number" id="modalMaHp" /><br/>
+                <select id="modalMaHp">
+                  <option value="">-- Chọn học phần --</option>
+                </select><br/>
                 <label>Tên học phần:</label>
                 <input type="text" id="modalTen" /><br/>
                 <label>Số tín chỉ:</label>
@@ -97,6 +100,19 @@ export default function createPlan() {
 
     function openModal(plan = null) {
         document.getElementById("planModal").style.display = "flex";
+        // Gọi API để fill dropdown học phần
+        getAllHocPhan().then(hocphans => {
+            const select = document.getElementById("modalMaHp");
+            select.innerHTML = '<option value="">-- Chọn học phần --</option>';
+            hocphans.forEach(hp => {
+                const opt = document.createElement("option");
+                opt.value = hp.maHp;
+                opt.text = `${hp.maHp} - ${hp.tenHocPhan}`;
+                if (plan?.maHp == hp.maHp) opt.selected = true;
+                select.appendChild(opt);
+            });
+        });
+
         document.getElementById("modalTitle").innerText = plan ? "Sửa học phần" : "Thêm học phần";
         document.getElementById("modalKeHoachId").value = plan?.keHoachId || "";
         document.getElementById("modalMaHp").value = plan?.maHp || "";
