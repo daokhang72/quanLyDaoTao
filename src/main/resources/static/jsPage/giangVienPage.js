@@ -21,7 +21,7 @@ export default function createGV() {
                     </div>
                 </div>
 
-                <table class="gv-table">
+                <table class="gv-table" id="giangVienTable">
                     <thead>
                     <tr>
                         <th>Giảng viên ID</th>
