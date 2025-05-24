@@ -50,7 +50,7 @@ public class UserController {
             UserResponse response = userService.login(request);
 
             if (response.isAdmin()) {
-                return "index";
+                return "redirect:/";
             } else {
                 model.addAttribute("error", "Bạn không có quyền truy cập!");
                 return "login";
