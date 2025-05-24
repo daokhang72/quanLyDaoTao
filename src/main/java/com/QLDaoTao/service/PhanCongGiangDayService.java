@@ -21,6 +21,7 @@ public class PhanCongGiangDayService {
         e.setMahp(r.mahp());
         e.setNhom(r.nhom());
         e.setHotencbgd(r.hotencbgd());
+        e.setGiangvienId(r.giangvienId());
         e.setSotietthuchien(r.sotietthuchien());
         e.setSotietthucte(r.sotietthucte());
         return PhanCongGiangDayResponse.of(repository.save(e));

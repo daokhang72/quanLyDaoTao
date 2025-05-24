@@ -4,6 +4,7 @@ import {
     capNhatPhanCong,
     taoPhanCong
 } from '/jsApi/giangdayJSAPI.js';
+import { getAllHocPhan } from "/jsApi/hocPhanJSAPI.js";
 
 export default function createAssignment() {
     const content = document.querySelector(".content");
@@ -54,8 +55,16 @@ export default function createAssignment() {
             <div class="modal-content">
                 <h3>Thêm học phần phân công</h3>
                 <form id="addForm">
-                    <label>Mã học phần: <input type="number" id="addMahp" required /></label><br/>
-                    <label>Giảng viên: <input type="text" id="addGV" required /></label><br/>
+                    <label>
+                        Mã học phần:
+                        <select id="modalMaHp" required></select>
+                    </label><br/>
+                    <label>
+                        Giảng viên:
+                        <select id="addGV" required>
+                            <option value="">-- Chọn giảng viên --</option>
+                        </select>
+                    </label><br/>
                     <label>Nhóm: <input type="text" id="addNhom" required /></label><br/>
                     <label>Số tiết thực hiện: <input type="number" id="addSTTH" required /></label><br/>
                     <label>Số tiết thực tế: <input type="number" id="addSTTT" required /></label><br/>
@@ -161,7 +170,22 @@ export default function createAssignment() {
     window.addCTDT = function () {
         document.getElementById("addForm").reset();
         document.getElementById("addModal").style.display = "flex";
+
+        getAllHocPhan().then(hocphans => {
+            const select = document.getElementById("modalMaHp");
+            select.innerHTML = '<option value="">-- Chọn học phần --</option>';
+            hocphans.forEach(hp => {
+                const opt = document.createElement("option");
+                opt.value = hp.maHp;
+                opt.text = `${hp.maHp} - ${hp.tenHocPhan}`;
+                select.appendChild(opt);
+            });
+        });
+
+        loadGiangVien();
+
     }
+
 
     document.getElementById("closeAddModal").addEventListener("click", () => {
         document.getElementById("addModal").style.display = "none";
@@ -170,8 +194,9 @@ export default function createAssignment() {
     document.getElementById("addForm").addEventListener("submit", async (e) => {
         e.preventDefault();
         const newData = {
-            mahp: parseInt(document.getElementById("addMahp").value),
-            hotencbgd: document.getElementById("addGV").value,
+            mahp: parseInt(document.getElementById("modalMaHp").value),
+            giangvienId: parseInt(document.getElementById("addGV").value),
+            hotencbgd: document.getElementById("addGV").options[document.getElementById("addGV").selectedIndex].text,
             nhom: document.getElementById("addNhom").value,
             sotietthuchien: parseInt(document.getElementById("addSTTH").value),
             sotietthucte: parseInt(document.getElementById("addSTTT").value),
@@ -187,4 +212,20 @@ export default function createAssignment() {
         }
     });
 
+    function loadGiangVien() {
+        fetch("/admin/giangvien/list")
+            .then(res => res.json())
+            .then(giangviens => {
+                const select = document.getElementById("addGV");
+                select.innerHTML = '<option value="">-- Chọn giảng viên --</option>';
+
+                giangviens.forEach(gv => {
+                    const opt = document.createElement("option");
+                    opt.value = gv.giangVienId; // hoặc gv.email nếu dùng email làm định danh
+                    opt.textContent = gv.hoTen;
+                    select.appendChild(opt);
+                });
+            })
+            .catch(err => console.error("Không thể tải giảng viên:", err));
+    }
 }
